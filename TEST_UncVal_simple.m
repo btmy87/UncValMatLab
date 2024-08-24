@@ -1,6 +1,6 @@
 % Test_UncVal_simple
 % simple script based unit tests for UncVal
-% runtests("TEST_UncVal_simple");
+% runtests("TEST_UncVal_simple")
 close all
 clear
 clc
@@ -26,6 +26,16 @@ assertClose(z.val, 3.0);
 assertClose(z.xvar, 0.01);
 assertClose(z.xvar, sum(z.srcs.values));
 
+%% Test Plus with same UncVal
+% capture correlation
+x = UncVal(1.0, 0.1, "x");
+z = x + x;
+assertClose(z.val, 2.0);
+assertClose(z.xvar, 0.04);
+assertClose(z.xvar, sum(z.srcs.values));
+assert(numEntries(z.srcs) == 1);
+
+
 %% Test Minus with 2 UncVals
 x = UncVal(2.0, 0.1, "x");
 y = UncVal(1.0, 0.2, "y");
@@ -42,6 +52,14 @@ assertClose(z.val, 1.0);
 assertClose(z.xvar, 0.01);
 assertClose(z.xvar, sum(z.srcs.values));
 assert(numEntries(z.srcs) == 2);
+
+%% Test Minus with same UncVal
+x = UncVal(2.0, 0.1, "x");
+z = x - x;
+assertClose(z.val, 0.0);
+assertClose(z.xvar, 0.0);
+assertClose(z.xvar, sum(z.srcs.values));
+assert(numEntries(z.srcs) == 1);
 
 %% Test Unary Plus
 x = UncVal(1.0, 0.1, "x");
@@ -78,9 +96,27 @@ assert(numEntries(z.srcs) == 2);
 
 %% Test Times with repeated UncVal
 % should see single value in srcs
-x = UncVal(2.0, 0.1, "x");
+x = UncVal(3.0, 0.1, "x");
 z = x.*x;
-assertClose(z.val, 4.0);
-assertClose(z.xvar, 0.08);
+assertClose(z.val, 9.0);
+assertClose(z.xvar, 0.36);
 assertClose(z.xvar, sum(z.srcs.values));
 assert(numEntries(z.srcs) == 1);
+
+%% Test Divide by Self
+
+x = UncVal(3.0, 0.1, "x");
+z = x./x;
+assertClose(z.val, 1.0);
+assertClose(z.xvar, 0.0);
+assertClose(z.xvar, sum(z.srcs.values));
+assert(numEntries(z.srcs) == 1);
+
+%% Test power with scalar
+% should see single value in srcs
+x = UncVal(3.0, 0.1, "x");
+z = x.^2;
+assertClose(z.val, 9.0);
+assertClose(z.xvar, 0.36);
+assertClose(z.xvar, sum(z.srcs.values));
+assert(numEntries(z.srcs) == 2);

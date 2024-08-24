@@ -9,6 +9,6 @@ else
     count = count + 1;
 end
 
-idStr = sprintf("PleaseNameMe%04d", count);
+idStr = sprintf("var%04d", count);
 end
 

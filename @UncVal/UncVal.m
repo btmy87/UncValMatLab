@@ -5,14 +5,16 @@ classdef UncVal
     %   method
     
     properties
+    end
+    properties(SetAccess=private)
         val double % value
         xvar double % variance in value
-        id string % string id
         srcs % dictionary of sources of variance
+        id string % string id
     end
     properties (Constant, Hidden)
         calcId = "calc" % ID used for results of calculations
-        defaultId = "no_id" % Id used if none is given
+        constId = "const" % ID used for constants
         keyType = "string" % key type for srcs dictionary
         valueType = "double" % value type for srcs dictionary
     end
@@ -29,14 +31,16 @@ classdef UncVal
                 id (1, 1) string = ""
             end
 
-            assert(id~=UncVal.calcId, "UncVal id cannot be '" + ...
-                UncVal.calcId + "'. This is reserved for internal use.");
-            assert(id~=UncVal.defaultId, "UncVal id cannot be '" + ...
-                UncVal.defaultId + "'. This is reserved for internal use.");
+            assert(id~=UncVal.calcId, "UncVal:InvalidId", ...
+                "UncVal id '%s' cannot be used. This is reserved for internal use.", ...
+                UncVal.calcId);
+            assert(~(id==UncVal.constId && unc > 0.0), "UncVal:InvalidId", ...
+                "UncVal id '%s' cannot be used. This is reserved for internal use.", ...
+                UncVal.constId);
 
             % make an id if the user didn't supply one
             if id == ""
-                id = UncVal.defaultId;
+                id = UncVal.makeId();
             end
 
             % expand the uncertainty to match the size of val in case
