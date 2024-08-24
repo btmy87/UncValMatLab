@@ -15,8 +15,6 @@ classdef UncVal
     properties (Constant, Hidden)
         calcId = "calc" % ID used for results of calculations
         constId = "const" % ID used for constants
-        keyType = "string" % key type for srcs dictionary
-        valueType = "double" % value type for srcs dictionary
     end
     
     methods
@@ -50,8 +48,8 @@ classdef UncVal
             obj.id = id;
 
             % create dictionary to track srcs of variance.
-            obj.srcs = configureDictionary(UncVal.keyType, UncVal.valueType);
-            obj.srcs(id) = obj.xvar;
+            obj.srcs = configureDictionary("string", "cell");
+            obj.srcs{id} = obj.xvar;
         end
         
     end
