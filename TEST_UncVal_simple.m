@@ -2,7 +2,7 @@
 % simple script based unit tests for UncVal
 % runtests("TEST_UncVal_simple")
 close all
-clear
+clear classes %#ok<CLCLS>
 clc
 
 relTol = 1e-10;
@@ -157,3 +157,89 @@ assertClose(z.xvar, [0.05, 0.05; ...
                      0.10, 0.10]);
 % assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
 assert(numEntries(z.srcs) == 2);
+
+%% Test parenReference for scalar
+x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
+y = UncVal([2.0; 3.0], [0.2; 0.3], "y");
+z = x + y;
+z1 = z(2, 1);
+assertClose(z1.val, 4.0);
+assertClose(z1.xvar, 0.10);
+assertClose(z1.xvar, sum(cell2mat(z1.srcs.values)));
+assert(numEntries(z1.srcs), 2);
+
+%% Test parenReference for range
+x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
+y = UncVal([2.0; 3.0], [0.2; 0.3], "y");
+z = x + y;
+z1 = z(1, :);
+assertClose(z1.val, [3.0, 4.0]);
+assertClose(z1.xvar, [0.05, 0.05]);
+assert(numEntries(z1.srcs), 2);
+
+%% Test parenDelete
+x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
+y = UncVal([2.0, 3.0], [0.2, 0.3], "y");
+z = 2.*x + y;
+z(1) = [];
+assertClose(z.val, 7.0);
+assertClose(z.xvar, 0.13);
+assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assert(numEntries(z.srcs) == 3);
+
+%% Test cat
+x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
+y = UncVal([2.0, 3.0], [0.2, 0.3], "y");
+z = [x, y];
+assertClose(z.val, [1.0, 2.0, 2.0, 3.0]);
+assertClose(z.xvar, [0.01, 0.01, 0.04, 0.09]);
+assert(numEntries(z.srcs), 2);
+
+%% Test empty
+x = UncVal.empty();
+y = UncVal.empty(0, 1);
+assert(isempty(x));
+assert(isempty(y));
+
+%% Test size
+x = UncVal([1,2,3;4,5,6], 0.01, "x");
+assert(all(size(x) == [2, 3]));
+
+%% Test parenAssign
+x = UncVal([1,2,3], 0.1, "x");
+y = UncVal(4.0, 0.2, "y");
+x(2) = y;
+assertClose(x.val, [1.0, 4.0, 3.0]);
+assertClose(x.xvar, [0.01, 0.04, 0.01]);
+assertClose(x.srcs{"x"}, [0.01, 0.00, 0.01]);
+assertClose(x.srcs{"y"}, [0.00, 0.04, 0.00]);
+assert(numEntries(x.srcs)==2);
+
+%% Test problem 3.47 phys431
+% from https://courses.washington.edu/phys431/propagation_errors_UCh.pdf
+g = 9.8;
+M = UncVal(100, 1, "M");
+m = UncVal(50, 1, "m");
+a = g.*(M-m)./(M+m);
+assert(abs(a.val-3.27)<0.01)
+assert(abs(a.unc()-0.097)<0.001)
+
+%% Test problem QuickCheck 3.9 phys431
+% from https://courses.washington.edu/phys431/propagation_errors_UCh.pdf
+x = UncVal(200, 2, "x");
+y = UncVal(50, 2, "y");
+z = UncVal(40, 2, "z");
+D = y - z;
+assertClose(D.val, 10);
+assertClose(D.unc(), 2*sqrt(2));
+
+q1 = x./D;
+assertClose(q1.val, 20);
+assertClose(q1.unc(), 20.*((2/200).^2 + (2*sqrt(2)/10).^2).^0.5);
+
+%% Test Example d from LSU
+% https://www.geol.lsu.edu/jlorenzo/geophysics/uncertainties/Uncertaintiespart2.html
+w = UncVal(4.52, 0.02, "w");
+x = UncVal(2.0, 0.2, "x");
+y = UncVal(3.0, 0.6, "y");
+z = w.*x + y.^2;

@@ -19,7 +19,7 @@ for k = y1.srcs.keys'
         srcs{k} = srcs{k} + (f./y1.val).^2.*y1.srcs{k} ...
                 - 2.0.*f.^2./(x1.val.*y1.val).*sqrt(x1.srcs{k}.*y1.srcs{k});
     else
-        srcs{k} = x1.val.^2.*y1.srcs{k};
+        srcs{k} = (f./y1.val).^2.*y1.srcs{k};
     end
 end
 

@@ -1,4 +1,4 @@
-classdef UncVal
+classdef UncVal < matlab.mixin.indexing.RedefinesParen
     %UNCVAL Calculations with uncertainty
     %   Perform standard matlab calculations with uncertainty
     %   Propagates uncertainty with derivatives using an autodiff like
@@ -48,15 +48,26 @@ classdef UncVal
             obj.id = id;
 
             % create dictionary to track srcs of variance.
-            obj.srcs = configureDictionary("string", "cell");
+            % obj.srcs = configureDictionary("string", "cell"); % >=2023b
+            obj.srcs = dictionary();
             obj.srcs{id} = obj.xvar;
         end
-        
+
+        varargout = size(obj,varargin);
+        C = cat(dim,varargin);
+
     end
     methods (Static=true)
         obj = UncValInt(val, xvar, srcs); % internal use constructor
         obj = makeUncVal(val);
         str = makeId();
+        obj = empty(varargin);
+    end
+    methods (Access=protected)
+        varargout = parenReference(obj, indexOp);
+        n = parenListLength(obj,indexOp,indexContext);
+        updatedObj = parenDelete(obj,indexOp);
+        updatedObj = parenAssign(obj,indexOp,varargin);% not implemented
     end
 end
 
