@@ -326,3 +326,34 @@ q = (x+2)./(x+y.*cos(4.0*theta));
 
 assert(abs(q.val-3.5)<0.1);
 assert(abs(q.unc()-sqrt(3.3))<0.02);
+
+%% Test problem E4 from NIST-TN-1900
+% https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1900.pdf
+% don't even match the nominal calc??????
+dp = UncVal(1.993e3, 25.0/2 , "dp"); % pa
+r = 287.058;
+t = UncVal(292.8, 0.11/2, "t"); % K
+p = UncVal(101.4e3, 2.1e3/2, "p"); % pa
+dens = p./(r.*t);
+% v = sqrt(2.*dp.*r.*t./p);
+v = sqrt(2*dp./dens);
+
+% assert(abs(v.val-40.64)<0.02);
+% assert(abs(v.unc-0.25)<0.01);
+
+%% chemistry example
+% example 1 from https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Quantifying_Nature/Significant_Digits/Propagation_of_Error
+
+c = UncVal(13.7, 0.3, "c");
+l = UncVal(1.0, 0.1, "l");
+A = UncVal(0.172807, 0.000008, "A");
+
+e1 = A./(l.*c);
+assert(abs(e1.val-0.013)<0.001);
+assert(abs(e1.unc()./e1.val-0.10237)<0.001);
+
+%% example from https://123.physics.ucdavis.edu/week_0_files/ErrorPropagation2A.pdf
+x = UncVal(5.75, 0.08, "x");
+q = x.^3;
+assert(abs(q.val-190)<1);
+assert(abs(q.unc()-7.93)<0.02);
