@@ -8,8 +8,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
     end
     properties(SetAccess=private)
         val double % value
-        xvar double % variance in value
-        srcs % dictionary of sources of variance
+        srcs % dictionary of sources of variance and sensitivity factors
         id string % string id
     end
     properties (Constant, Hidden)
@@ -44,13 +43,14 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
             % expand the uncertainty to match the size of val in case
             % the user gives a scalar unc and an array val
             obj.val = val;
-            obj.xvar = unc.*unc + zeros(size(val));
             obj.id = id;
 
-            % create dictionary to track srcs of variance.
-            % obj.srcs = configureDictionary("string", "cell"); % >=2023b
+            % create dictionary to track srcs of variance.  Expand out
+            % everything to the size of val.
+            % obj.srcs = configureDictionary("string", "struct"); % >=2023b
             obj.srcs = dictionary();
-            obj.srcs{id} = obj.xvar;
+            obj.srcs(id) = struct("xvar", unc.^2 + zeros(size(val)), ...
+                                  "sens", ones(size(val)));
         end
 
         varargout = size(obj,varargin);

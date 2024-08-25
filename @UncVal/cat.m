@@ -25,7 +25,8 @@ allfields = unique(fields);
 for i = 1:numX
     for k = allfields'
         if ~isKey(x{i}.srcs, k)
-            x{i}.srcs{k} = zeros(size(x{i}.val));
+            x{i}.srcs(k) = struct("xvar", zeros(size(x{i}.val)), ...
+                                  "sens", zeros(size(x{i}.val)));
         end
     end
 end
@@ -34,11 +35,14 @@ end
 srcs = dictionary();
 % srcs = configureDictionary("string", "cell"); % >=2023b
 for k = allfields'
-    temp = cell(numX, 1);
+    tempVar = cell(numX, 1);
+    tempSen = cell(numX, 1);
     for i = 1:numX
-        temp{i} = x{i}.srcs{k};
+        tempVar{i} = x{i}.srcs(k).xvar;
+        tempSen{i} = x{i}.srcs(k).sens;
     end
-    srcs{k} = cat(dim, temp{:});
+    srcs(k) = struct("xvar", cat(dim, tempVar{:}), ...
+                     "sens", cat(dim, tempSen{:}));
 end
 
 % and finally, we make our object

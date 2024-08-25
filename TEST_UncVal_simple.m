@@ -15,24 +15,22 @@ x = UncVal(1.0, 0.1, "x");
 y = UncVal(2.0, 0.2, "y");
 z = x + y;
 assertClose(z.val, 3.0);
-assertClose(z.xvar, 0.05);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.05);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Plus with scalar
 x = UncVal(1.0, 0.1, "x");
 z = x + 2;
 assertClose(z.val, 3.0);
-assertClose(z.xvar, 0.01);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.01);
+assert(numEntries(z.srcs) == 2);
 
 %% Test Plus with same UncVal
 % capture correlation
 x = UncVal(1.0, 0.1, "x");
 z = x + x;
 assertClose(z.val, 2.0);
-assertClose(z.xvar, 0.04);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.04);
 assert(numEntries(z.srcs) == 1);
 
 
@@ -41,48 +39,42 @@ x = UncVal(2.0, 0.1, "x");
 y = UncVal(1.0, 0.2, "y");
 z = x - y;
 assertClose(z.val, 1.0);
-assertClose(z.xvar, 0.05);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.05);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Minus with scalar
 x = UncVal(2.0, 0.1, "x");
 z = x - 1;
 assertClose(z.val, 1.0);
-assertClose(z.xvar, 0.01);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.01);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Minus with same UncVal
 x = UncVal(2.0, 0.1, "x");
 z = x - x;
 assertClose(z.val, 0.0);
-assertClose(z.xvar, 0.0);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.0);
 assert(numEntries(z.srcs) == 1);
 
 %% Test Unary Plus
 x = UncVal(1.0, 0.1, "x");
 z = +x;
 assertClose(z.val, 1.0);
-assertClose(z.xvar, 0.01);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.01);
 assert(numEntries(z.srcs) == 1);
 
 %% Test Unary Minus
 x = UncVal(1.0, 0.1, "x");
 z = -x;
 assertClose(z.val, -1.0);
-assertClose(z.xvar, 0.01);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.01);
 assert(numEntries(z.srcs) == 1);
 
 %% Test Times with Scalar
 x = UncVal(1.0, 0.1, "x");
 z = 2.*x;
 assertClose(z.val, 2.0);
-assertClose(z.xvar, 0.04);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.04);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Times with 2 UncVals
@@ -90,8 +82,7 @@ x = UncVal(2.0, 0.1, "x");
 y = UncVal(3.0, 0.2, "y");
 z = x.*y;
 assertClose(z.val, 6.0);
-assertClose(z.xvar, 0.25);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.25);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Times with repeated UncVal
@@ -99,8 +90,7 @@ assert(numEntries(z.srcs) == 2);
 x = UncVal(3.0, 0.1, "x");
 z = x.*x;
 assertClose(z.val, 9.0);
-assertClose(z.xvar, 0.36);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.36);
 assert(numEntries(z.srcs) == 1);
 
 %% Test Divide by Self
@@ -108,8 +98,7 @@ assert(numEntries(z.srcs) == 1);
 x = UncVal(3.0, 0.1, "x");
 z = x./x;
 assertClose(z.val, 1.0);
-assertClose(z.xvar, 0.0);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.0);
 assert(numEntries(z.srcs) == 1);
 
 %% Test Divide by Scalar
@@ -117,8 +106,7 @@ assert(numEntries(z.srcs) == 1);
 x = UncVal(2.0, 0.1, "x");
 z = x./2;
 assertClose(z.val, 1.0);
-assertClose(z.xvar, 0.0025);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.0025);
 assert(numEntries(z.srcs) == 2);
 
 %% Test power with scalar
@@ -126,8 +114,7 @@ assert(numEntries(z.srcs) == 2);
 x = UncVal(3.0, 0.1, "x");
 z = x.^2;
 assertClose(z.val, 9.0);
-assertClose(z.xvar, 0.36);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.36);
 assert(numEntries(z.srcs) == 2);
 
 %% Test same sized arrays
@@ -135,16 +122,14 @@ x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
 y = UncVal([2.0, 3.0], [0.2, 0.3], "y");
 z = x + y;
 assertClose(z.val, [3.0, 5.0]);
-assertClose(z.xvar, [0.05, 0.1]);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), [0.05, 0.1]);
 assert(numEntries(z.srcs) == 2);
 
 %% Test array with scalar
 x = UncVal([1.0, 2.0], [0.1, 0.2], "x");
 z = 2.*x;
 assertClose(z.val, [2.0, 4.0]);
-assertClose(z.xvar, [0.04, 0.16]);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), [0.04, 0.16]);
 assert(numEntries(z.srcs) == 2);
 
 %% Test Array Expansion
@@ -153,9 +138,8 @@ y = UncVal([2.0; 3.0], [0.2; 0.3], "y");
 z = x + y;
 assertClose(z.val, [3.0, 4.0; ...
                     4.0, 5.0]);
-assertClose(z.xvar, [0.05, 0.05; ...
+assertClose(var(z), [0.05, 0.05; ...
                      0.10, 0.10]);
-% assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
 assert(numEntries(z.srcs) == 2);
 
 %% Test parenReference for scalar
@@ -164,8 +148,7 @@ y = UncVal([2.0; 3.0], [0.2; 0.3], "y");
 z = x + y;
 z1 = z(2, 1);
 assertClose(z1.val, 4.0);
-assertClose(z1.xvar, 0.10);
-assertClose(z1.xvar, sum(cell2mat(z1.srcs.values)));
+assertClose(var(z1), 0.10);
 assert(numEntries(z1.srcs), 2);
 
 %% Test parenReference for range
@@ -174,7 +157,7 @@ y = UncVal([2.0; 3.0], [0.2; 0.3], "y");
 z = x + y;
 z1 = z(1, :);
 assertClose(z1.val, [3.0, 4.0]);
-assertClose(z1.xvar, [0.05, 0.05]);
+assertClose(var(z1), [0.05, 0.05]);
 assert(numEntries(z1.srcs), 2);
 
 %% Test parenDelete
@@ -183,8 +166,7 @@ y = UncVal([2.0, 3.0], [0.2, 0.3], "y");
 z = 2.*x + y;
 z(1) = [];
 assertClose(z.val, 7.0);
-assertClose(z.xvar, 0.13);
-assertClose(z.xvar, sum(cell2mat(z.srcs.values)));
+assertClose(var(z), 0.13);
 assert(numEntries(z.srcs) == 3);
 
 %% Test cat
@@ -192,7 +174,7 @@ x = UncVal([1.0, 2.0], [0.1, 0.1], "x");
 y = UncVal([2.0, 3.0], [0.2, 0.3], "y");
 z = [x, y];
 assertClose(z.val, [1.0, 2.0, 2.0, 3.0]);
-assertClose(z.xvar, [0.01, 0.01, 0.04, 0.09]);
+assertClose(var(z), [0.01, 0.01, 0.04, 0.09]);
 assert(numEntries(z.srcs), 2);
 
 %% Test empty
@@ -210,9 +192,9 @@ x = UncVal([1,2,3], 0.1, "x");
 y = UncVal(4.0, 0.2, "y");
 x(2) = y;
 assertClose(x.val, [1.0, 4.0, 3.0]);
-assertClose(x.xvar, [0.01, 0.04, 0.01]);
-assertClose(x.srcs{"x"}, [0.01, 0.00, 0.01]);
-assertClose(x.srcs{"y"}, [0.00, 0.04, 0.00]);
+assertClose(var(x), [0.01, 0.04, 0.01]);
+assertClose(x.srcs("x").sens, [1, 0, 1]);
+assertClose(x.srcs("y").sens, [0, 1, 0]);
 assert(numEntries(x.srcs)==2);
 
 %% Test problem 3.47 phys431

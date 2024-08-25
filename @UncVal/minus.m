@@ -3,6 +3,9 @@ function obj = minus(x, y)
 x1 = UncVal.makeUncVal(x);
 y1 = UncVal.makeUncVal(y);
 
+% Let f = x(a) - y(a)
+% df/da = dx/da - dy/da
+
 % start with the uncertainty from x, and modify
 srcs = x1.srcs;
 
@@ -10,14 +13,15 @@ srcs = x1.srcs;
 for k = y1.srcs.keys'
     if isKey(srcs, k)
         % data is present in both sets
-        % s^2 = sx^2 + sy^2 + 2*sxy
-        % since they're perfectly correlated, sxy = sx*sy
-        vx = x1.srcs{k};
-        vy = y1.srcs{k};
-        srcs{k} = vx + vy - 2.0.*sqrt(vx.*vy);
+        assert(x1.srcs(k).xvar == y1.srcs(k).xvar, ...
+            "UncVal:InconsistentVariance", ...
+            "Inconssitent variance for id: '%s' %g vs %g", ...
+            k, x1.srcs(k).xvar, y1.srcs(k).xvar);
+        srcs(k).sens = srcs(k).sens - y1.srcs(k).sens;
     else
-        % data only in y set
-        srcs{k} = y1.srcs{k};
+        % data only in y set, we can copy both variance and flip the sensitivity
+        srcs(k) = y1.srcs(k);
+        srcs(k).sens = -srcs(k).sens;
     end
 end
 
