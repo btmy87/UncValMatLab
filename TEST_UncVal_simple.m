@@ -314,6 +314,19 @@ assertClose(var(y3), var(y3check));
 assertClose(y4.val, 1.0);
 assertClose(var(y4), 0.0);
 
+%% Test trig in degrees
+x = UncVal(25.0, 0.1, "x");
+y1 = sind(x);
+y2 = cosd(x);
+y3 = tand(x);
+y3check = sind(x)./cosd(x);
+y4 = sind(x).^2 + cosd(x).^2;
+
+assertClose(y3.val, y3check.val);
+assertClose(var(y3), var(y3check));
+assertClose(y4.val, 1.0);
+assertClose(var(y4), 0.0);
+
 
 %% Test problem 3.50 phys431
 % from https://courses.washington.edu/phys431/propagation_errors_UCh.pdf
