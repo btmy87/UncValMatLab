@@ -79,6 +79,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
         str = makeId();
         obj = empty(varargin);
         srcs = propagate(xSrcs, ySrcs, Cx, Cy);
+        % h = errorbar(varargin);
     end
     methods (Access=protected)
         varargout = parenReference(obj, indexOp);
