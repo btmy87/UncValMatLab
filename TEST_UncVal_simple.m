@@ -285,3 +285,32 @@ z = x^2;
 assertClose(z.val, 9.0);
 assertClose(var(z), 0.36);
 assert(numEntries(z.srcs) == 2);
+
+%% Test exponentials and logs
+x = UncVal(1.0, 0.1, "x");
+y1 = log(x);
+y2 = log10(x);
+y3 = exp(x);
+
+y4 = exp(log(x));
+assertClose(y4.val, 1.0);
+assertClose(var(y4), 0.01);
+
+y5 = log10(10.^x);
+assertClose(y5.val, 1.0);
+assertClose(var(y5), 0.01);
+% TODO: add some real tests
+
+%% Test trig
+x = UncVal(1.0, 0.1, "x");
+y1 = sin(x);
+y2 = cos(x);
+y3 = tan(x);
+y3check = sin(x)./cos(x);
+y4 = sin(x).^2 + cos(x).^2;
+
+assertClose(y3.val, y3check.val);
+assertClose(var(y3), var(y3check));
+assertClose(y4.val, 1.0);
+assertClose(var(y4), 0.0);
+
