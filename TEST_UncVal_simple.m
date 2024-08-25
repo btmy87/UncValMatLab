@@ -314,3 +314,15 @@ assertClose(var(y3), var(y3check));
 assertClose(y4.val, 1.0);
 assertClose(var(y4), 0.0);
 
+
+%% Test problem 3.50 phys431
+% from https://courses.washington.edu/phys431/propagation_errors_UCh.pdf
+x = UncVal(10.0, 2.0, "x");
+y = UncVal(7.0, 1.0, "y");
+thetad = UncVal(40.0, 3.0, "thetad");
+
+theta = thetad*pi/180.0;
+q = (x+2)./(x+y.*cos(4.0*theta));
+
+assert(abs(q.val-3.5)<0.1);
+assert(abs(q.unc()-sqrt(3.3))<0.02);

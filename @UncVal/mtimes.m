@@ -13,11 +13,13 @@ assert(sx(2) == sy(1), "Incompatible sizes for array multiplication.");
 nrow = sx(1);
 ncol = sy(2);
 
+x1 = UncVal.makeUncVal(x);
+y1 = UncVal.makeUncVal(y);
 % Then we'll go element by element
-obj = zeros(nrow, ncol).*x(1, 1); % this leaves an extra constant in the srcs dictionary, but it works
+obj = zeros(nrow, ncol).*x1(1, 1); % this leaves an extra constant in the srcs dictionary, but it works
 for i = 1:nrow
     for j = 1:ncol
-        obj(i, j) = sum(x(i, :).*y(:, j)');
+        obj(i, j) = sum(x1(i, :).*y1(:, j)');
     end
 end
 
