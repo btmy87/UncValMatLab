@@ -220,8 +220,68 @@ assertClose(q1.val, 20);
 assertClose(q1.unc(), 20.*((2/200).^2 + (2*sqrt(2)/10).^2).^0.5);
 
 %% Test Example d from LSU
-% https://www.geol.lsu.edu/jlorenzo/geophysics/uncertainties/Uncertaintiespart2.html
-w = UncVal(4.52, 0.02, "w");
-x = UncVal(2.0, 0.2, "x");
-y = UncVal(3.0, 0.6, "y");
-z = w.*x + y.^2;
+% % https://www.geol.lsu.edu/jlorenzo/geophysics/uncertainties/Uncertaintiespart2.html
+% % This example is incorrect, doesn't appropriately add uncertainty in
+% % last step.
+% w = UncVal(4.52, 0.02, "w");
+% x = UncVal(2.0, 0.2, "x");
+% y = UncVal(3.0, 0.6, "y");
+% v = w.*x;
+% y2 = y.^2;
+% z = w.*x + y.^2;
+% 
+% assert(abs(z.val-18.0)<0.1)
+% assert(abs(z.unc()-4.5)<0.1)
+
+%% Test Sum, vector
+x = UncVal(1, 0.1, "x");
+y = UncVal(2, 0.1, "y");
+temp = [x, y];
+z = sum([x, y]);
+assertClose(z.val, 3);
+assertClose(var(z), 0.02);
+assert(numEntries(z.srcs), 2);
+
+%% Test transpose
+x = UncVal([1, 2], 0.1, "x");
+z = x.';
+assertClose(z.val, [1; 2]);
+assertClose(var(z), [0.01; 0.01]);
+assert(all(size(z)==[2,1]));
+
+%% Test ctranspose
+x = UncVal([1, 2], 0.1, "x");
+z = x';
+assertClose(z.val, [1; 2]);
+assertClose(var(z), [0.01; 0.01]);
+assert(all(size(z)==[2,1]));
+
+%% Test matrix multiplication
+x = UncVal([1, 0; 0, 1], 0.1, "x");
+y = UncVal([1, 2; 3, 4], 0.1, "y");
+z = x*y;
+assertClose(z.val, [1, 2; 3, 4]);
+% no idea what this means in an uncertainty world
+
+%% Test mtimes with 2 UncVal Scalars
+x = UncVal(2.0, 0.1, "x");
+y = UncVal(3.0, 0.2, "y");
+z = x*y;
+assertClose(z.val, 6.0);
+assertClose(var(z), 0.25);
+assert(numEntries(z.srcs) == 3);
+
+%% Test mrdivide by Scalar
+x = UncVal(2.0, 0.1, "x");
+z = x/2;
+assertClose(z.val, 1.0);
+assertClose(var(z), 0.0025);
+assert(numEntries(z.srcs) == 2);
+
+%% Test mpower with scalar
+% should see single value in srcs
+x = UncVal(3.0, 0.1, "x");
+z = x^2;
+assertClose(z.val, 9.0);
+assertClose(var(z), 0.36);
+assert(numEntries(z.srcs) == 2);
