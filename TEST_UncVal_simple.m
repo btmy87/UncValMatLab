@@ -306,13 +306,49 @@ x = UncVal(1.0, 0.1, "x");
 y1 = sin(x);
 y2 = cos(x);
 y3 = tan(x);
-y3check = sin(x)./cos(x);
+y3check = y1./y2;
 y4 = sin(x).^2 + cos(x).^2;
 
 assertClose(y3.val, y3check.val);
 assertClose(var(y3), var(y3check));
 assertClose(y4.val, 1.0);
 assertClose(var(y4), 0.0);
+
+%% Test csc
+x = UncVal(1.0, 0.1, "x");
+y = csc(x) - 1.0./sin(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
+
+%% Test cscd
+x = UncVal(18, 1, "x");
+y = cscd(x) - 1.0./sind(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
+
+%% Test sec
+x = UncVal(1.0, 0.1, "x");
+y = sec(x) - 1.0./cos(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
+
+%% Test secd
+x = UncVal(18, 1, "x");
+y = secd(x) - 1.0./cosd(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
+
+%% Test cot
+x = UncVal(1.0, 0.1, "x");
+y = cot(x) - 1.0./tan(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
+
+%% Test cotd
+x = UncVal(18, 1, "x");
+y = cotd(x) - 1.0./tand(x);
+assertClose(y.val, 0.0);
+assertClose(var(y), 0.0);
 
 %% Test trig in degrees
 x = UncVal(25.0, 0.1, "x");
