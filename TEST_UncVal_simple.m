@@ -370,3 +370,12 @@ x = UncVal(5.75, 0.08, "x");
 q = x.^3;
 assert(abs(q.val-190)<1);
 assert(abs(q.unc()-7.93)<0.02);
+
+%% Test string conversion
+x = UncVal(1, 0.1/2, "x");
+y = UncVal([1, 2; 3, 4], 0.1/2, "y");
+
+xstr = string(x);
+ystr = string(y);
+assert(xstr == "UncVal (id=x): 1 ± 0.1 (2-sigma)");
+assert(ystr == "UncVal (id=y): [2x2 double]")

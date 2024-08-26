@@ -3,7 +3,7 @@
 % the regular 'plot' command just plots the values
 % the errorbar command automatically plots error bars at ±2*x.unc()
 
-x = UncVal(linspace(0, 1, 11), 0.05/2, "x");
+x = UncVal(linspace(0, 1, 8), 0.05/2, "x");
 y = x.^2;
 
 figure("defaultErrorBarLineWidth", 1.5);

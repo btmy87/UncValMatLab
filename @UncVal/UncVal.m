@@ -4,12 +4,17 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
     %   Propagates uncertainty with derivatives using an autodiff like
     %   method
     
-    properties
-    end
-    properties(SetAccess=private)
+
+    properties (SetAccess=private)
         val double % value
-        srcs % dictionary of sources of variance and sensitivity factors
         id string % string id
+    end
+    properties (SetAccess=private, Dependent)
+        std_unc % standard uncertainty
+        var_srcs % table with sources of variance
+    end
+    properties (SetAccess=private, Hidden)
+        srcs % dictionary of sources of variance and sensitivity factors
     end
     properties (Constant, Hidden)
         calcId = "calc" % ID used for results of calculations
@@ -67,6 +72,29 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
             obj.srcs = dictionary();
             obj.srcs(id) = struct("xvar", unc.^2 + zeros(size(val)), ...
                                   "sens", ones(size(val)));
+        end
+
+        function out = get.var_srcs(obj)
+            % var_srcs returns table with names and sources of variance for object
+            names = obj.srcs.keys;
+            
+            sens = [obj.srcs.values.sens]';
+            xvars = [obj.srcs.values.xvar]';
+            vars = sens.^2.*xvars;
+            
+            out = table();
+            out.name = names;
+            out.var = vars;
+            out.var_frac = out.var./sum(out.var);
+            out.src_var = xvars;
+            out.sens = sens;
+            out = sortrows(out, "var", "descend");
+        end
+
+        function out = get.std_unc(obj)
+            % returns the standard uncertainty, really only a separate
+            % property to make a more useful display
+            out = obj.unc();
         end
 
         varargout = size(obj,varargin);

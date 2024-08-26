@@ -41,8 +41,9 @@ fprintf("w = %.3f ± %.3f lbm/s\n", w_lbm, 2*w_lbm.unc()); % printing 95% confid
 % print a table with the sources of variance and their relative
 % contributions
 fprintf("\nRelative sources of variance:\n");
-srcs = w_lbm.var_srcs();
+srcs = w_lbm.var_srcs;
 disp(srcs);
+% display(w_lbm);
 
 % and we can make a pareto plot of these variances
 figure;
