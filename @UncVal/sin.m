@@ -3,7 +3,6 @@ function obj = sin(x)
 obj = x;
 obj.val = sin(x.val);
 for k = obj.srcs.keys'
-    % note value already contains the exponential
     obj.srcs(k).sens = cos(x.val).*obj.srcs(k).sens;
 end
 end
