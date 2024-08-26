@@ -51,7 +51,7 @@ The plot and errorbar functions are overloaded so that objects can be
 passed directly to plot calls.  Errorbars are automatically configured.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="light.png">
-  <img alt="Example plot with error bars." src="light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/btmy87/UncValMatLab/blob/f1cf926f13616ede45290f293d57dd828b0057f9/dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/btmy87/UncValMatLab/blob/f1cf926f13616ede45290f293d57dd828b0057f9/light.png">
+  <img alt="Example plot with error bars." src="https://github.com/btmy87/UncValMatLab/blob/f1cf926f13616ede45290f293d57dd828b0057f9/light.png">
 </picture>
