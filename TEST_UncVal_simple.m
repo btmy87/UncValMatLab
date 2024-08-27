@@ -1,9 +1,9 @@
 % Test_UncVal_simple
 % simple script based unit tests for UncVal
 % runtests("TEST_UncVal_simple")
-close all
-clear classes %#ok<CLCLS>
-clc
+% close all
+% clear classes %#ok<CLCLS>
+% clc
 
 relTol = 1e-10;
 absTol = 1e-10;
