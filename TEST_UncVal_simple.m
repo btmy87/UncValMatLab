@@ -350,6 +350,48 @@ y = cotd(x) - 1.0./tand(x);
 assertClose(y.val, 0.0);
 assertClose(var(y), 0.0);
 
+%% Test asin
+x = UncVal(0.3, 0.01, "x");
+y = asin(x);
+z = sin(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
+%% Test asind
+x = UncVal(18, 1, "x");
+y = asind(x);
+z = sind(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
+%% Test acos
+x = UncVal(0.3, 0.01, "x");
+y = acos(x);
+z = cos(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
+%% Test acosd
+x = UncVal(18, 1, "x");
+y = acosd(x);
+z = cosd(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
+%% Test atan
+x = UncVal(0.3, 0.01, "x");
+y = atan(x);
+z = tan(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
+%% Test atand
+x = UncVal(18, 1, "x");
+y = atand(x);
+z = tand(y);
+assertClose(z.val, x.val);
+assertClose(var(z), var(x));
+
 %% Test trig in degrees
 x = UncVal(25.0, 0.1, "x");
 y1 = sind(x);
