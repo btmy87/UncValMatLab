@@ -1,5 +1,6 @@
 % example for github readme
-%% normal usage
+
+%% TEST normal usage
 x = UncVal(1.0, 0.1./2.0, "x"); % create values with standard uncertaities
 y = UncVal(2.0, 0.2./2.0, "y"); % give values unique id's
 z = sqrt(x.^2 + y.^2); % error is propagated through calculations
@@ -8,7 +9,7 @@ string(z)
 
 z.var_srcs % display sources of variance
 
-%% dependence
+%% TEST dependence
 x = UncVal(1.0, 0.1/2.0, "x");
 y = UncVal(1.0, 0.1/2.0, "y");
 z1 = sin(x).^2 + cos(y).^2; % has uncertainty with independent inputs

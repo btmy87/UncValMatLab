@@ -3,6 +3,7 @@
 % the regular 'plot' command just plots the values
 % the errorbar command automatically plots error bars at ±2*x.unc()
 
+%% Test 2
 x = UncVal(linspace(0, 1, 8), 0.1/2, "x");
 y = x.^2;
 

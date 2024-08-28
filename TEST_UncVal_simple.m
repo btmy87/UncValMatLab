@@ -457,3 +457,16 @@ xstr = string(x);
 ystr = string(y);
 assert(xstr == "UncVal (id=x): 1 ± 0.1 (2-sigma)");
 assert(ystr == "UncVal (id=y): [2x2 double]")
+
+%% Test double conversion
+x = UncVal(1, 0.1, "x");
+assert(double(x) == x.val);
+
+%% Test ldivide with scalar
+x = UncVal(1, 0.1, "x");
+y = UncVal(2, 0.2, "y");
+
+z1 = x./y;
+z2 = y.\x;
+assertClose(z1.val, z2.val);
+assertClose(var(z1), var(z2));

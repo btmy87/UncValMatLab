@@ -1,11 +1,11 @@
-%%example_UncVal_1
+%example_UncVal_1
 % flow through a venturi
 % consider flow of water through a venturi
 % we measure pressure and temperature upstream of the venturi, and the
 % throat pressure of the venturi
 % we neglect any Cd effects
 
-%% Calculations
+%% Test 1
 % take the upstream diameter as 0.5±0.01 (take all uncertainties as 95%)
 % and the throat diameter as 0.1±0.005
 d1in = UncVal(0.5, 0.01/2, "d1"); % divide by two to provide 1-sigma unc.
