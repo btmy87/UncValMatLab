@@ -27,4 +27,4 @@ errorbar(x.val, y, Marker="d", MarkerFaceColor=ha.Color);
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
-errorbar(x, y, CapSize=4);
+errorbar(x, y, CapSize=4, SDE=false);
