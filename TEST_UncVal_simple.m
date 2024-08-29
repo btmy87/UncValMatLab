@@ -288,9 +288,9 @@ assert(numEntries(z.srcs) == 2);
 
 %% Test exponentials and logs
 x = UncVal(1.0, 0.1, "x");
-y1 = log(x);
-y2 = log10(x);
-y3 = exp(x);
+y1 = log(x); %#ok<NASGU>
+y2 = log10(x); %#ok<NASGU>
+y3 = exp(x); %#ok<NASGU>
 
 y4 = exp(log(x));
 assertClose(y4.val, 1.0);
@@ -397,7 +397,7 @@ x = UncVal(25.0, 0.1, "x");
 y1 = sind(x);
 y2 = cosd(x);
 y3 = tand(x);
-y3check = sind(x)./cosd(x);
+y3check = y1./y2;
 y4 = sind(x).^2 + cosd(x).^2;
 
 assertClose(y3.val, y3check.val);
@@ -470,3 +470,58 @@ z1 = x./y;
 z2 = y.\x;
 assertClose(z1.val, z2.val);
 assertClose(var(z1), var(z2));
+
+%% Test covariance, uncorrelated
+x = UncVal(1, 0.1, "x");
+y = UncVal(2, 0.2, "y");
+assertClose(cov(x, y), [var(x), 0.0; 0.0, var(y)]);
+
+%% Test coveriance, perfectly correlated
+x = UncVal(1, 0.1, "x");
+y = x;
+assertClose(cov(x, y), var(x).*[1,1;1,1]);
+
+
+%% Test covariance, perfectly correlated multiple sources
+x1 = UncVal(1, 0.1, "x1");
+x2 = UncVal(2, 0.2, "x2");
+x3 = UncVal(3, 0.3, "x3");
+y1 = x1.^2 + sin(x2) + sqrt(x3);
+y2 = x1.^2 + sin(x2) + sqrt(x3);
+assertClose(cov(y1, y2), var(y1).*[1,1;1,1]);
+
+%% Test covariance, partially correlated
+
+x1 = UncVal(1, 0.1, "x1");
+x2 = UncVal(2, 0.2, "x2");
+y1 = 2*x1 + x2;
+
+rng("default"); % want repeatability for testing
+x1mc = x1.val + x1.unc()*randn(1, 1e6);
+x2mc = x2.val + x2.unc()*randn(size(x1mc));
+y1mc = 2*x1mc + x2mc;
+
+covLin = cov(x1, y1);
+covMc = cov(x1mc, y1mc);
+covErr = abs(covLin-covMc)./covMc;
+assert(all(covErr(:)< 5e-3));
+
+%% Test covariance, partially correlated, negative
+
+x1 = UncVal(1, 0.1, "x1");
+x2 = UncVal(2, 0.2, "x2");
+y1 = -2*x1 + x2;
+
+rng("default"); % want repeatability for testing
+x1mc = x1.val + x1.unc()*randn(1, 1e6);
+x2mc = x2.val + x2.unc()*randn(size(x1mc));
+y1mc = -2*x1mc + x2mc;
+
+covLin = cov(x1, y1);
+covMc = cov(x1mc, y1mc);
+covErr = abs(covLin-covMc)./covMc;
+assert(all(covErr(:)< 5e-3));
+
+%% Test normal display
+x = UncVal(1, 0.1, "x");
+disp(x);

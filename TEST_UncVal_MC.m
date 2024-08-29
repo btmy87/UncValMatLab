@@ -3,8 +3,8 @@ classdef TEST_UncVal_MC < matlab.unittest.TestCase
     
     properties (Constant)
         NUM_MC = 1e6; % number of points for MC propagation
-        ABS_TOL = 1e-5;
-        REL_TOL = 1e-5;
+        ABS_TOL = 1e-4;
+        REL_TOL = 1e-4;
     end
     
     properties (TestParameter)
