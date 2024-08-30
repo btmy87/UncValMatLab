@@ -547,7 +547,16 @@ assertClose(std(x), 0.1);
 
 %% Test pdf
 x = UncVal(0, 1, "x");
-assertClose(x.pdf(0), 1/sqrt(2*pi));
+assertClose(x.pdf([-inf, 0, inf]), [0, 1/sqrt(2*pi), 0]);
 
 xs = linspace(-8, 8, 1e5+1);
 assertClose(trapz(xs, x.pdf(xs)), 1.0);
+
+%% Test cdf
+x = UncVal(0, 1, "x");
+assertClose(x.cdf([-inf, 0, inf]), [0, 0.5, 1]);
+
+xs = linspace(-4, 4, 1e6+1);
+y1 = x.cdf(xs(1)) + cumtrapz(xs, x.pdf(xs));
+y2 = x.cdf(xs);
+assertClose(y1, y2);
