@@ -525,3 +525,18 @@ assert(all(covErr(:)< 5e-3));
 %% Test normal display
 x = UncVal(1, 0.1, "x");
 disp(x);
+
+%% Test reshape
+x = UncVal([1, 2, 3, 4], 0.1.*[1,2,3,4], "x");
+y1 = reshape(x, 4, 1);
+assertClose(y1.val, [1;2;3;4]);
+assertClose(y1.srcs("x").xvar, (0.1.*[1;2;3;4]).^2);
+assert(all(size(y1)==[4,1]));
+assert(all(size(y1.srcs("x").sens)==[4, 1]))
+
+
+y1 = reshape(x, [], 2);
+assertClose(y1.val, [1,3;2,4]);
+assertClose(y1.srcs("x").xvar, (0.1.*[1,3;2,4]).^2);
+assert(all(size(y1)==[2, 2]));
+assert(all(size(y1.srcs("x").sens)==[2, 2]));

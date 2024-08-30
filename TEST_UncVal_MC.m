@@ -94,7 +94,7 @@ classdef TEST_UncVal_MC < matlab.unittest.TestCase
             y2 = f(x2);
 
             % check average and variance
-            tc.verifyTrue(tc.isClose(y1.val, mean(y2)));
+            tc.verifyTrue(tc.isClose(mean(y1), mean(y2)));
             tc.verifyTrue(tc.isClose(var(y1), var(y2)));
             tc.verifyTrue(tc.isClose(unc(y1), std(y2)));
             tc.verifyInstanceOf(string(y1), "string");
