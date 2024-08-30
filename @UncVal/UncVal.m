@@ -87,6 +87,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
             out.var = vars;
             out.var_frac = out.var./sum(out.var);
             out.src_var = xvars;
+            out.src_unc = sqrt(xvars);
             out.sens = sens;
             out = sortrows(out, "var", "descend");
         end
