@@ -540,3 +540,14 @@ assertClose(y1.val, [1,3;2,4]);
 assertClose(y1.srcs("x").xvar, (0.1.*[1,3;2,4]).^2);
 assert(all(size(y1)==[2, 2]));
 assert(all(size(y1.srcs("x").sens)==[2, 2]));
+
+%% Test std function
+x = UncVal(1, 0.1, "x");
+assertClose(std(x), 0.1);
+
+%% Test pdf
+x = UncVal(0, 1, "x");
+assertClose(x.pdf(0), 1/sqrt(2*pi));
+
+xs = linspace(-8, 8, 1e5+1);
+assertClose(trapz(xs, x.pdf(xs)), 1.0);
