@@ -11,6 +11,6 @@ assert(isa(a, "UncVal") && isa(b, "UncVal"), "UncVal:NotSupported", ...
     "`corrcoef` inputs must both be `UncVal` objects");
 
 c = cov(a, b)./a.unc()./b.unc();
-R = [1, c(1, 2); c(2, 1), 1]
+R = [1, c(1, 2); c(2, 1), 1];
 
 end

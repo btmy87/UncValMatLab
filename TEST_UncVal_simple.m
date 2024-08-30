@@ -572,3 +572,10 @@ assertClose(y1, y2);
 assert(length(y) == 91);
 assert(length(xs) == 91);
 assertClose(y(46), 0.5);
+
+%% Test corrcoeff
+x = UncVal(0, 1, "x");
+y = UncVal(1, 0.1, "y");
+
+assertClose(corrcoef(x, x), [1, 1; 1, 1]);
+assertClose(corrcoef(x, y), [1, 0; 0, 1]);
