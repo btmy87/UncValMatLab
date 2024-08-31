@@ -536,7 +536,7 @@ assert(all(size(y1.srcs("x").sens)==[4, 1]))
 
 
 y1 = reshape(x, [], 2);
-assertClose(y1.val, [1,3;2,4]);
+assertClose(mean(y1), [1,3;2,4]);
 assertClose(y1.srcs("x").xvar, (0.1.*[1,3;2,4]).^2);
 assert(all(size(y1)==[2, 2]));
 assert(all(size(y1.srcs("x").sens)==[2, 2]));
@@ -606,3 +606,15 @@ assert(all(abs(y - y0)<2e-3));
 %% Test parenListLength
 x = UncVal(0, 1, "x");
 assertClose(x(1).srcs("x").xvar, 1);
+
+%% Test uncertainty at non-standard levels
+x = UncVal(0, 1, "x");
+
+% test at the 1-sigma, 2-sigma, and 3-sigma levels
+% values from wikipedia
+p = [0.68268949213, 0.954499736104, 0.997300203937];
+assertClose(unc(x, p), [1, 2, 3]);
+
+% test with shifted value
+y = UncVal(5, 1, "y");
+assertClose(unc(y, p), [1, 2, 3]);
