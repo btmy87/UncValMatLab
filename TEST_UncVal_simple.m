@@ -597,3 +597,12 @@ assert(abs(qm1+1)<2e-5);
 assert(abs(qp1-1)<2e-5);
 assert(abs(qp2-2)<2e-5);
 assert(abs(qp3-3)<5e-5);
+
+% test with evenly spaced quantiles
+y = quantile(x, 3);
+y0 = [-0.675, 0, 0.675];
+assert(all(abs(y - y0)<2e-3));
+
+%% Test parenListLength
+x = UncVal(0, 1, "x");
+assertClose(x(1).srcs("x").xvar, 1);
