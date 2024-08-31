@@ -4,8 +4,8 @@
 % the errorbar command automatically plots error bars at ±2*x.unc()
 
 %% Test 2
-x = UncVal(linspace(0, 1, 8), 0.1/2, "x");
-y = x.^2;
+x = UncVal(linspace(0, 1, 8), 0.02, "x");
+y = x.^2 + UncVal(0, 0.04, "y");
 
 figure("defaultErrorBarLineWidth", 1.5, ...
     "Units", "in", "Position", [1,1,6,4]);
@@ -27,4 +27,4 @@ errorbar(x.val, y, Marker="d", MarkerFaceColor=ha.Color);
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
-errorbar(x, y, CapSize=4, SDE=false);
+errorbar(x, y);

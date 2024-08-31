@@ -1,66 +1,69 @@
-function h = errorbar(varargin)
+function h = errorbar(ha, x, y, opts, erropts)
 %ERRORBAR errorbar plot for UncVal objects, automatically configures 95%
 %error bars.
 % One additional argument is supported beyond the normal errorbar
 % functionality.  For cases where both `x` and `y` are UncVal objects, pass
 % SDE=false to get normal x-y errorbars.  Defaults to SDE=true, which will
 % draw a standard devaite ellipse illustrating the correlation.
+%
+% INPUTS:
+%  ha: optional axes handle
+%  x: x coordinates to plot if x and y are both given.  If only one is
+%  given, a default x coordinate is generated
+%  y: y coordiantes to plot
+%  opts: Name-Value pairs specific to UncVal.errorbar
+%    .SDE: plot standard-deviational-ellipse for correlated `x` and `y`
+%          defaults to true
+%    .SDEpatch: if true, plots SDE's as patches.  if false, plots SDE's as
+%          lines that form closed ellipses.  defaults to false.
+%    .confidence: confidence interval for setting errorbars, set as a
+%    fractional confidence in interval [0, 1] defaults to 0.9545 (2-sigma)
+%  erropts: Name-Value pairs for standard errorbar call
 
+arguments
+    ha
+    x  = []
+    y = []
+    opts.SDE (1, 1) logical = true;
+    opts.SDEpatch (1, 1) logical = false;
+    opts.confidence double = 0.954499736103642;
+    erropts.?matlab.graphics.chart.primitive.ErrorBar;
+end
+
+erropts = namedargs2cell(erropts);
 
 %% parse input arguments
-i = 1;
-if nargin > 0 && all(ishghandle(varargin{1}))
-    ha = varargin{1};
-    i = i + 1;
-else
+% need to figure out if ha was given, if not first argument was x
+if ~all(ishghandle(ha))
+    % shift arguments back
+    y = x;
+    x = ha;
+
+    % use current axes
     ha = gca;
 end
 
-% check if y is supplied or x and y
-yOnly = nargin < (i+1) ...
-      || ~(isnumeric(varargin{i+1}(1)) || isa(varargin{i+1}(1), "UncVal"));
-if yOnly
-    % just y, let's make a default x
-    y = varargin{i};
+% if y is not given, generate default x coordinates
+if isempty(y)
+    y = x;
     x = 1:length(y);
-    i = i + 1;
-else
-    % x and y are given
-    x = varargin{i};
-    y = varargin{i+1};
-    i = i + 2;
-end
-extraArgs1 = varargin(i:end);
-
-% extract new arguments
-SDE = true;
-i = 1;
-extraArgs = {};
-while i <= length(extraArgs1)
-    if (ischar(extraArgs1{i}) || isstring(extraArgs1{i})) ...  %must be string like
-            && string(extraArgs1{i}) == "SDE" ... % and be equal to the SDE option name
-            && i < length(extraArgs1) ... % and there must be an element for the value of the object
-            && ~extraArgs1{i+1}
-        SDE = false;
-        i = i + 2;
-    else
-        extraArgs = [extraArgs, extraArgs1(i)]; %#ok<AGROW>
-        i = i + 1;
-    end
 end
 
 %% Make plot
 if isnumeric(x)
     % only y is an UncVal
-    h = errorbar(ha, x, y.val, 2.*y.unc(), "vertical", extraArgs{:});
+    ry = f_r(y, opts.confidence);
+    h = errorbar(ha, x, y.val, ry, "vertical", erropts{:});
 elseif isnumeric(y)
     % only x is an UncVal
-    h = errorbar(ha, x.val, y, 2.*x.unc(), "horizontal", extraArgs{:});
-elseif ~SDE
+    rx = f_r(x, opts.confidence);
+    h = errorbar(ha, x.val, y, rx, "horizontal", erropts{:});
+elseif ~opts.SDE
     % both x and y are UncVals, but user doesn't want correlated SDE
     % they may have different uncertainties, so we use the expanded form
-    h = errorbar(ha, x.val, y.val, 2.*y.unc(), 2.*y.unc(), ...
-        2.*x.unc(), 2.*x.unc(), extraArgs{:});
+    rx = f_r(x, opts.confidence);
+    ry = f_r(y, opts.confidence);
+    h = errorbar(ha, x.val, y.val, ry, ry, rx, rx, erropts{:});
 else
     % both x and y are UncVals, and we want the ellipse
     % will draw as an array of patch objects, each column of the plot
@@ -74,10 +77,10 @@ else
     [xp, yp] = unit_circle(); % one circle
     xp = xp + zeros(size(x)); % one circle per point
     yp = yp + zeros(size(y)); 
+    xp2 = zeros(size(xp));
+    yp2 = zeros(size(yp));
 
-
-    r = sqrt(-2*log(1-0.95)); % scaling to enclose 95% of values, 
-                              % TODO: let user override
+    r = sqrt(-2*log(1-opts.confidence)); % scaling for confidence
     for i = 1:length(x)    
         % axes of ellipse are given by the eigenvectors and eigenvalues of 
         % the covariance matrix
@@ -97,8 +100,20 @@ else
     xp2 = xp2 + x.val;
     yp2 = yp2 + y.val;
 
-    h = patch(xp2, yp2, ha.ColorOrder(ha.ColorOrderIndex, :), ...
-        extraArgs{:});
+    if opts.SDEpatch
+        h = patch(xp2(1:end-1, :), yp2(1:end-1, :), ...
+            ha.ColorOrder(ha.ColorOrderIndex, :), ...
+            "EdgeColor", ha.ColorOrder(ha.ColorOrderIndex, :), ...
+            "FaceAlpha", 0.3, ...
+            erropts{:});
+        ha.ColorOrderIndex = ha.ColorOrderIndex + 1;
+    else
+        % collapse into a single line, separating individual ellipses with
+        % nans
+        xp2(end+1, :) = nan;
+        yp2(end+1, :) = nan;
+        h = plot(xp2(:), yp2(:), erropts{:});
+    end
     
 end
 
@@ -113,7 +128,13 @@ end
 % angle theta / pi
 thetaQpi = linspace(0, 2, n+1)';
 
-x = cospi(thetaQpi(1:n));
-y = sinpi(thetaQpi(1:n));
+x = cospi(thetaQpi);
+y = sinpi(thetaQpi);
+end
+
+function r = f_r(obj, p)
+% helper function to return multiplier for double-sided probability
+
+r = quantile(obj, 0.5*p+0.5) - obj.val;
 end
 
