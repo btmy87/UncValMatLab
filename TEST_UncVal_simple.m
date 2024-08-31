@@ -579,3 +579,21 @@ y = UncVal(1, 0.1, "y");
 
 assertClose(corrcoef(x, x), [1, 1; 1, 1]);
 assertClose(corrcoef(x, y), [1, 0; 0, 1]);
+
+%% Test quantile
+x = UncVal(0, 1, "x");
+assertClose(quantile(x, 0.5), 0);
+
+% don't have table to full tolernace
+qm3 = quantile(x, 0.00135);
+qm2 = quantile(x, 0.02275);
+qm1 = quantile(x, 0.15866);
+qp1 = quantile(x, 0.84134);
+qp2 = quantile(x, 0.97725);
+qp3 = quantile(x, 0.99865);
+assert(abs(qm3+3)<5e-5);
+assert(abs(qm2+2)<2e-5);
+assert(abs(qm1+1)<2e-5);
+assert(abs(qp1-1)<2e-5);
+assert(abs(qp2-2)<2e-5);
+assert(abs(qp3-3)<5e-5);
