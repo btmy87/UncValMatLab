@@ -2,22 +2,22 @@
 % using this script instead of default test workflow
 % want more control over reporting the results
 
+% make a directory for test results
+mkdir('test-results');
+
 % set these outputs up top incase anything fails catastrophically
 out = struct();
 out.CI_TEST_PASSED = "Not Run";
 out.CI_TEST_COLOR = "#A2142F";
 out.CI_COVERAGE = "Not Run";
 out.CI_COVERAGE_COLOR = "#A2142F";
-writestruct(out, "./test-results/summary.json");
+writestruct(out, "test-results/summary.json");
 
 import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TestReportPlugin
 import matlab.unittest.plugins.CodeCoveragePlugin
 import matlab.unittest.plugins.XMLPlugin;
 import matlab.unittest.plugins.codecoverage.CoberturaFormat;
-
-% make a directory for test results
-mkdir('test-results');
 
 % create a test suite and runner
 suite = testsuite();
@@ -62,6 +62,6 @@ elseif covRate < 90
 end
 out.CI_COVERAGE_COLOR = tempColor;
 
-writestruct(out, "./test-results/summary.json");
+writestruct(out, "test-results/summary.json");
 
 assertSuccess(results);
