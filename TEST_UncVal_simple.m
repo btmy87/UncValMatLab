@@ -618,3 +618,11 @@ assertClose(unc(x, p), [1, 2, 3]);
 % test with shifted value
 y = UncVal(5, 1, "y");
 assertClose(unc(y, p), [1, 2, 3]);
+
+%% Test other uncertainty input types
+% these should both yield a standard uncertainty of 1.0
+x = UncVal(0, 2      , "x", uncType="2-sigma");
+y = UncVal(0, sqrt(3), "y", uncType="uniform");
+
+assertClose(std(x), 1.0);
+assertClose(std(y), 1.0);

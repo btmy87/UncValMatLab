@@ -85,9 +85,9 @@ else
     out.CI_ERRORS_COLOR = "#77AC30"; % green
 end
 
-% convert errors and warnings to strings
-
-
 writestruct(out, "test-results/summary.json", PrettyPrint=false);
+
+% print out summary info for the GitHub Actions log
+disp(out);
 
 assertSuccess(results);
