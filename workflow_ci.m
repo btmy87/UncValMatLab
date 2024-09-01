@@ -3,10 +3,12 @@
 % want more control over reporting the results
 
 % set these outputs up top incase anything fails catastrophically
-setenv("CI_TEST_PASSED", "Not Run");
-setenv("CI_TEST_COLOR", "#A2142F");
-setenv("CI_COVERAGE", "Not Run");
-setenv("CI_COVERAGE_COLOR", "#A2142F");
+out = struct();
+out.CI_TEST_PASSED = "Not Run";
+out.CI_TEST_COLOR = "#A2142F";
+out.CI_COVERAGE = "Not Run";
+out.CI_COVERAGE_COLOR = "#A2142F";
+writestruct(out, ".\test-results\summary.json");
 
 import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TestReportPlugin
@@ -39,18 +41,18 @@ display(results);
 % save test result info to environment variables for dynamic badge
 totalPass = sum([results.Passed]);
 totalFail = sum([results.Failed] | [results.Incomplete]);
-setenv("CI_TEST_PASSED", totalPass + " of " + length(results));
+out.CI_TEST_PASSED = totalPass + " of " + length(results);
 
 tempColor = "#D95319"; % red
 if totalPass == length(results)
     tempColor = "#77AC30"; % green
 end
-setenv("CI_TEST_COLOR", tempColor);
+out.CI_TEST_COLOR = tempColor;
 
 % save coverage result to environment variable for dynamic badge
 c = readstruct("test-results/coverage.xml");
 covRate = c.line_rateAttribute*100.0;
-setenv("CI_COVERAGE", sprintf("%.1f%%", covRate));
+out.CI_COVERAGE = sprintf("%.1f%%", covRate);
 
 tempColor = "#77AC30"; % green
 if covRate < 70
@@ -58,6 +60,8 @@ if covRate < 70
 elseif covRate < 90
     tempColor = "#EDB120"; % yellow
 end
-setenv("CI_COVERAGE_COLOR", tempColor);
+out.CI_COVERAGE_COLOR = tempColor;
+
+writestruct(out, ".\test-results\summary.json");
 
 assertSuccess(results);

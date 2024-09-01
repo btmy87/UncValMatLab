@@ -50,6 +50,16 @@ jobs:
           name: code-coverage
           path: test-results/coverage.xml
 
+      - name: Get test summary from json
+        id: getParams
+        shell: bash
+        run: |
+           content=`cat ./test-results/summary.json`
+           content="${content//'%'/'%25'}"
+           content="${content//$'\n'/'%0A'}"
+           content="${content//$'\r'/'%0D'}"
+           echo "::set-output name=summaryJson::$content"
+
       - name: Dynamic Badge Test Results
         if: always()
         uses: schneegans/dynamic-badges-action@v1.7.0
@@ -58,8 +68,8 @@ jobs:
           gistID: abf84875ed00c29442dd86871ea752f8
           filename: badge_uncval_test.svg
           label: Tests Passed
-          message: ${{ env.CI_TEST_PASSED }}
-          color: ${{ env.CI_TEST_COLOR }}
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_TEST_PASSED}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_TEST_COLOR}}
       
       - name: Dynamic Badge Coverage Results
         if: always()
@@ -69,7 +79,7 @@ jobs:
           gistID: 0352238dc7d3d89e52a6e67fda5a6578
           filename: badge_uncval_coverage.svg
           label: Coverage
-          message: ${{ env.CI_COVERAGE }}
-          color: ${{ env.CI_COVERAGE_COLOR }}
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE_COLOR}}
 
 
