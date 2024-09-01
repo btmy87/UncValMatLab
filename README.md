@@ -1,6 +1,8 @@
 # UncValMatLab
 MatLab class for handling uncertain values.
 
+[![CI](https://github.com/btmy87/UncValMatLab/actions/workflows/ci.yml/badge.svg?branch=dev_ci)](https://github.com/btmy87/UncValMatLab/actions/workflows/ci.yml)
+
 Propagates uncertainty through basic matlab calculations, tracking sources
 of uncertainty.  Most basic math operations are supported, along with some 
 trigonometry and exponents.
