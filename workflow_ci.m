@@ -3,7 +3,9 @@
 % want more control over reporting the results
 
 % make a directory for test results
-mkdir('test-results');
+if ~exist("test-results", "dir")
+    mkdir("test-results");
+end
 
 % set these outputs up top incase anything fails catastrophically
 out = struct();
@@ -32,10 +34,10 @@ reportPlugin = XMLPlugin.producingJUnitFormat('test-results/results.xml');
 runner.addPlugin(reportPlugin);
 
 % add code coverage plugin
-format = CoberturaFormat('test-results/coverage.xml');
-coveragePlugin = CodeCoveragePlugin.forFolder({'@UncVal'}, ...
-    'IncludingSubfolders', true, ...
-    'Producing', format);
+format = CoberturaFormat("test-results/coverage.xml");
+coveragePlugin = CodeCoveragePlugin.forFolder("@UncVal", ...
+    IncludingSubfolders=true, ...
+    Producing=format);
 runner.addPlugin(coveragePlugin);
 
 % Run tests
