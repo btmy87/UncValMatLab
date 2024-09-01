@@ -8,6 +8,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
     properties (SetAccess=private)
         val double % value
         id string % string id
+        uncType string % uncertainty type
     end
     properties (SetAccess=private, Dependent)
         std_unc % standard uncertainty
@@ -18,6 +19,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
     end
     properties (Constant, Hidden)
         calcId = "calc" % ID used for results of calculations
+        calcType = "1-sigma" % Uncertainty type to be assigned on calcs.
         constId = "const" % ID used for constants
     end
     
@@ -70,6 +72,7 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
             elseif opts.uncType == "uniform"
                 unc = unc./sqrt(3);
             end
+            obj.uncType = opts.uncType;
 
 
             % make an id if the user didn't supply one

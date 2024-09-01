@@ -5,6 +5,7 @@ function obj = UncValInt(val, srcs)
 obj = UncVal(val);
 obj.srcs = srcs;
 obj.id = UncVal.calcId;
+obj.uncType = UncVal.calcType;
 
 % force array expansion in all sources
 for k = obj.srcs.keys'
