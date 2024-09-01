@@ -6,6 +6,10 @@ name: CI
 on: 
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -58,7 +62,7 @@ jobs:
           content=`cat test-results/summary.json`
           echo "summaryJson=$content" >> "$GITHUB_OUTPUT"
 
-      - name: Debugging Stuff
+      - name: Print JSON for Debugging
         if: always()
         shell: bash
         run: |
@@ -86,4 +90,24 @@ jobs:
           message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE}}
           color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE_COLOR}}
 
+      - name: Dynamic Badge Code Errors
+        if: always()
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with: 
+          auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
+          gistID: 6faaf3d1487412ceff1c816380a60031
+          filename: badge_uncval_errors.svg
+          label: Coverage
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_ERRORS}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_ERRORS_COLOR}}
 
+      - name: Dynamic Badge Code Warnings
+        if: always()
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with: 
+          auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
+          gistID: b8e188a9982a89f4e878db8c75286270
+          filename: badge_uncval_warnings.svg
+          label: Coverage
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_WARNINGS}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_WARNINGS_COLOR}}

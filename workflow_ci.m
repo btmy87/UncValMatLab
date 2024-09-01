@@ -11,6 +11,10 @@ out.CI_TEST_PASSED = "Not Run";
 out.CI_TEST_COLOR = "#A2142F";
 out.CI_COVERAGE = "Not Run";
 out.CI_COVERAGE_COLOR = "#A2142F";
+out.CI_WARNINGS = "Not Run";
+out.CI_ERRORS = "Not Run";
+out.CI_WARNINGS_COLOR = "#A2142F";
+out.CI_ERRORS_COLOR = "#A2142F";
 writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 import matlab.unittest.TestRunner;
@@ -61,6 +65,28 @@ elseif covRate < 90
     tempColor = "#EDB120"; % yellow
 end
 out.CI_COVERAGE_COLOR = tempColor;
+
+% look for code issues and update structure
+issues = codeIssues();
+numWarnings = sum(issues.Issues.Severity == "warning" ...
+                      | issues.Issues.Severity == "info");
+numErrors = sum(issues.Issues.Severity == "error");
+out.CI_WARNINGS = sprintf("%.0f", numWarnings);
+if numWarnings > 0
+    out.CI_WARNINGS_COLOR = "#EDB120"; % yellow
+else
+    out.CI_WARNINGS_COLOR = "#77AC30"; % green
+end
+
+out.CI_ERRORS = sprintf("%.0f", numErrors);
+if numErrors > 0
+    out.CI_ERRORS_COLOR = "#D95319"; % red
+else
+    out.CI_ERRORS_COLOR = "#77AC30"; % green
+end
+
+% convert errors and warnings to strings
+
 
 writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
