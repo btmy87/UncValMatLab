@@ -51,6 +51,7 @@ jobs:
           path: test-results/coverage.xml
 
       - name: Get test summary from json
+        if: always()
         id: getParams
         shell: bash
         run: |
