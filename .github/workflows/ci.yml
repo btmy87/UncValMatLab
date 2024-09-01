@@ -32,11 +32,9 @@ jobs:
 
       # Run tests
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-command@v2
         with:
-          source-folder: "@UncVal"
-          test-results-junit: test-results/results.xml
-          code-coverage-cobertura: code-coverage/coverage.xml
+          command: workflow_ci
 
       - name: Upload test results
         if: always()
@@ -50,4 +48,28 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage
-          path: code-coverage/coverage.xml
+          path: test-results/coverage.xml
+
+      - name: Dynamic Badge Test Results
+        if: always()
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with: 
+          auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
+          gistID: abf84875ed00c29442dd86871ea752f8
+          filename: badge_uncval_test.svg
+          label: Tests Passed
+          message: ${{ env.CI_TEST_PASSED }}
+          color: ${{ env.CI_TEST_COLOR }}
+      
+      - name: Dynamic Badge Coverage Results
+        if: always()
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with: 
+          auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
+          gistID: 0352238dc7d3d89e52a6e67fda5a6578
+          filename: badge_uncval_coverage.svg
+          label: Coverage
+          message: ${{ env.CI_COVERAGE }}
+          color: ${{ env.CI_COVERAGE_COLOR }}
+
+
