@@ -59,7 +59,7 @@ jobs:
            content="${content//'%'/'%25'}"
            content="${content//$'\n'/'%0A'}"
            content="${content//$'\r'/'%0D'}"
-           echo "summaryJson=$content" >> "$GITHUB_OUTPUT"
+           echo "summaryJson=${content}" >> "$GITHUB_OUTPUT"
 
       - name: Dynamic Badge Test Results
         if: always()
