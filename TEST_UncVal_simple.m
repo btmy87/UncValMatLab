@@ -618,6 +618,3 @@ assertClose(unc(x, p), [1, 2, 3]);
 % test with shifted value
 y = UncVal(5, 1, "y");
 assertClose(unc(y, p), [1, 2, 3]);
-
-%% Test force failure
-assert(false);
