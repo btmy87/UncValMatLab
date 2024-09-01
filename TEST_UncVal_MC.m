@@ -98,6 +98,9 @@ classdef TEST_UncVal_MC < matlab.unittest.TestCase
             tc.verifyTrue(tc.isClose(var(y1), var(y2)));
             tc.verifyTrue(tc.isClose(unc(y1), std(y2)));
             tc.verifyInstanceOf(string(y1), "string");
+            
+            % confirm we set calcId on all calculations
+            tc.verifyTrue(y1.id == UncVal.calcId);
     
         end
 
