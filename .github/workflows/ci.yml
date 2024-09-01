@@ -15,7 +15,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,12 +39,14 @@ jobs:
           code-coverage-cobertura: code-coverage/coverage.xml
 
       - name: Upload test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: test-results/results.xml
 
       - name: Upload code coverage
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage
