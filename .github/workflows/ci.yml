@@ -59,7 +59,7 @@ jobs:
            content="${content//'%'/'%25'}"
            content="${content//$'\n'/'%0A'}"
            content="${content//$'\r'/'%0D'}"
-           echo "summaryJson=$content" >> $GITHUB_ENV
+           echo "summaryJson=$content" >> "$GITHUB_OUTPUT"
 
       - name: Dynamic Badge Test Results
         if: always()
@@ -69,8 +69,8 @@ jobs:
           gistID: abf84875ed00c29442dd86871ea752f8
           filename: badge_uncval_test.svg
           label: Tests Passed
-          message: ${{fromJson(summaryJson).CI_TEST_PASSED}}
-          color: ${{fromJson(summaryJson).CI_TEST_COLOR}}
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_TEST_PASSED}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_TEST_COLOR}}
       
       - name: Dynamic Badge Coverage Results
         if: always()
@@ -80,7 +80,7 @@ jobs:
           gistID: 0352238dc7d3d89e52a6e67fda5a6578
           filename: badge_uncval_coverage.svg
           label: Coverage
-          message: ${{fromJson(summaryJson).CI_COVERAGE}}
-          color: ${{fromJson(summaryJson).CI_COVERAGE_COLOR}}
+          message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE}}
+          color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_COVERAGE_COLOR}}
 
 
