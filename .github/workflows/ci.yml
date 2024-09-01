@@ -97,7 +97,7 @@ jobs:
           auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
           gistID: 6faaf3d1487412ceff1c816380a60031
           filename: badge_uncval_errors.svg
-          label: Coverage
+          label: Errors
           message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_ERRORS}}
           color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_ERRORS_COLOR}}
 
@@ -108,6 +108,6 @@ jobs:
           auth: ${{ secrets.DYNAMIC_BADGE_SECRET }}
           gistID: b8e188a9982a89f4e878db8c75286270
           filename: badge_uncval_warnings.svg
-          label: Coverage
+          label: Warnings
           message: ${{fromJson(steps.getParams.outputs.summaryJson).CI_WARNINGS}}
           color: ${{fromJson(steps.getParams.outputs.summaryJson).CI_WARNINGS_COLOR}}
