@@ -11,7 +11,7 @@ out.CI_TEST_PASSED = "Not Run";
 out.CI_TEST_COLOR = "#A2142F";
 out.CI_COVERAGE = "Not Run";
 out.CI_COVERAGE_COLOR = "#A2142F";
-writestruct(out, "test-results/summary.json");
+writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TestReportPlugin
@@ -62,6 +62,6 @@ elseif covRate < 90
 end
 out.CI_COVERAGE_COLOR = tempColor;
 
-writestruct(out, "test-results/summary.json");
+writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 assertSuccess(results);

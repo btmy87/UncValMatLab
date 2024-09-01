@@ -56,9 +56,6 @@ jobs:
         shell: bash
         run: |
           content=`cat test-results/summary.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
           echo "summaryJson=$content" >> "$GITHUB_OUTPUT"
 
       - name: Debugging Stuff
