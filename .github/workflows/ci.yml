@@ -55,11 +55,17 @@ jobs:
         id: getParams
         shell: bash
         run: |
-           content=`cat test-results/summary.json`
-           content="${content//'%'/'%25'}"
-           content="${content//$'\n'/'%0A'}"
-           content="${content//$'\r'/'%0D'}"
-           echo "summaryJson=${content}" >> "$GITHUB_OUTPUT"
+          content=`cat test-results/summary.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "summaryJson=$content" >> "$GITHUB_OUTPUT"
+
+      - name: Debugging Stuff
+        if: always()
+        shell: bash
+        run: |
+          echo "${{steps.getParams.outputs.summaryJson}}"
 
       - name: Dynamic Badge Test Results
         if: always()
