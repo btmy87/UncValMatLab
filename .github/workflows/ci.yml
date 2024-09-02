@@ -73,7 +73,7 @@ jobs:
           path: resources/${{ env.archstr }}-${{ matrix.version }}-*.svg
 
   readme_images:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
