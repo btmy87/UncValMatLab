@@ -1,5 +1,8 @@
 % make_graphics.m
 % makes graphics for readme file.
+close all
+clear
+clc
 
 x = UncVal(linspace(0, 1, 8), 0.02, "x");
 y = x.^2 + UncVal(0, 0.04, "y");
@@ -49,6 +52,7 @@ if ~exist("resources", "dir")
     mkdir("resources");
 end
 write_png(gcf, "resources/light.png");
+saveas(gcf, "resources/opaque.png");
 
 %% Make dark plot
 figure(Name="dark", ...
@@ -105,12 +109,6 @@ alpha = ones(size(a, [1, 2]));
 idx = all(a == cref, 3);
 alpha(idx) = 0;
 
-% smooth
-a = smooth3(a, "box", [3, 3, 1]);
-alpha2 = repmat(alpha, 1, 1, 3); % fake in a 3rd dimension
-alpha3 = smooth3(alpha2, "box", [3, 3, 1]);
-alpha4 = squeeze(alpha3(:, :, 1)); % remove fake dimension
-
-imwrite(a, filename, Alpha=alpha4);
+imwrite(a, filename, Alpha=alpha);
 
 end

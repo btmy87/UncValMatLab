@@ -82,5 +82,5 @@ Correlated errors are plotted as ellipses.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="resources/dark.png">
   <source media="(prefers-color-scheme: light)" srcset="resources/light.png">
-  <img alt="Example plot with error bars." src="resources/light.png">
+  <img alt="Example plot with error bars." src="resources/opaque.png">
 </picture>

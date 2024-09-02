@@ -72,32 +72,9 @@ jobs:
           name: badges-${{ matrix.os }}-${{ matrix.version }}
           path: resources/${{ env.archstr }}-${{ matrix.version }}-*.svg
 
-  readme_images:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup MATLAB
-        uses: matlab-actions/setup-matlab@v2
-        with: 
-          cache: true
-
-      - name: Make new readme images
-        uses: matlab-actions/run-command@v2
-        with:
-          command: make_graphics
-
-      - name: Upload images
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: readme-images
-          path: resources/*.png
-
   update_resources:
     if: always()
-    needs: [test, readme_images]
+    needs: [test]
     runs-on: ubuntu-latest
     permissions:
       contents: write
