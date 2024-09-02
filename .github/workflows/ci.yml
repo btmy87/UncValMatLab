@@ -91,11 +91,6 @@ jobs:
           path: resources/
           merge-multiple: true
 
-      - name: Copy workflow success badge
-        shell: bash
-        run: |
-          cp resources/success/ci.svg resources/
-
       - name: Push resources
         if: always()
         shell: bash

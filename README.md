@@ -1,33 +1,39 @@
 # UncValMatLab
 MatLab class for handling uncertain values.
 
-![CI](resources/ci.svg)
+<table>
+  <tr>
+    <td>Windows, R2024a: </td>
+    <td><img alt="TestResults"  src="resources/PCWIN64-R2024a-tests.svg"></td>
+    <td><img alt="TestCoverage" src="resources/PCWIN64-R2024a-coverage.svg"></td>
+    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2024a-errors.svg"></td>
+    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2024a-warnings.svg"></td>
+  </tr>
 
-Windows, R2024a:
-![TestResults](resources/PCWIN64-R2024a-tests.svg)
-![TestCoverage](resources/PCWIN64-R2024a-coverage.svg)
-![CodeErrors](resources/PCWIN64-R2024a-errors.svg)
-![CodeWarnings](resources/PCWIN64-R2024a-warnings.svg)
+  <tr>
+    <td>Linux, R2024a:</td>
+    <td><img alt="TestResults"  src="resources/GLNXA64-R2024a-tests.svg"></td>
+    <td><img alt="TestCoverage" src="resources/GLNXA64-R2024a-coverage.svg"></td>
+    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2024a-errors.svg"></td>
+    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2024a-warnings.svg"></td>
+  </tr>
 
-Linux, R2024a:
-![TestResults](resources/GLNXA64-R2024a-tests.svg)
-![TestCoverage](resources/GLNXA64-R2024a-coverage.svg)
-![CodeErrors](resources/GLNXA64-R2024a-errors.svg)
-![CodeWarnings](resources/GLNXA64-R2024a-warnings.svg)
+  <tr>
+    <td>Windows, R2022b:</td>
+    <td><img alt="TestResults"  src="resources/PCWIN64-R2022b-tests.svg"></td>
+    <td><img alt="TestCoverage" src="resources/PCWIN64-R2022b-coverage.svg"></td>
+    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2022b-errors.svg"></td>
+    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2022b-warnings.svg"></td>
+  </tr>
 
-Windows, R2022b:
-![TestResults](resources/PCWIN64-R2022b-tests.svg)
-![TestCoverage](resources/PCWIN64-R2022b-coverage.svg)
-![CodeErrors](resources/PCWIN64-R2022b-errors.svg)
-![CodeWarnings](resources/PCWIN64-R2022b-warnings.svg)
-
-Linux, R2022b:
-![TestResults](resources/GLNXA64-R2022b-tests.svg)
-![TestCoverage](resources/GLNXA64-R2022b-coverage.svg)
-![CodeErrors](resources/GLNXA64-R2022b-errors.svg)
-![CodeWarnings](resources/GLNXA64-R2022b-warnings.svg)
-
-_Badges only valid on main branch_ 
+  <tr>
+    <td>Linux, R2022b:</td>
+    <td><img alt="TestResults"  src="resources/GLNXA64-R2022b-tests.svg"></td>
+    <td><img alt="TestCoverage" src="resources/GLNXA64-R2022b-coverage.svg"></td>
+    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2022b-errors.svg"></td>
+    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2022b-warnings.svg"></td>
+  </tr>
+</table>
 
 Propagates uncertainty through basic matlab calculations, tracking sources
 of uncertainty.  Most basic math operations are supported, along with some 
