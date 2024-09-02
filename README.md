@@ -9,6 +9,12 @@ Windows, R2024a:
 ![CodeErrors](resources/PCWIN64-R2024a-errors.svg)
 ![CodeWarnings](resources/PCWIN64-R2024a-warnings.svg)
 
+Linux, R2024a:
+![TestResults](resources/GLNXA64-R2024a-tests.svg)
+![TestCoverage](resources/GLNXA64-R2024a-coverage.svg)
+![CodeErrors](resources/GLNXA64-R2024a-errors.svg)
+![CodeWarnings](resources/GLNXA64-R2024a-warnings.svg)
+
 _Badges only valid on main branch_ 
 
 Propagates uncertainty through basic matlab calculations, tracking sources
