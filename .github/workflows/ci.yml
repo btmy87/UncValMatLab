@@ -96,6 +96,7 @@ jobs:
           path: resources/*.png
 
   update_resources:
+    if: always()
     needs: [test, readme_images]
     runs-on: ubuntu-latest
     permissions:

@@ -41,6 +41,9 @@ nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
 errorbar(x, y);
 
+if ~exist("resources", "dir")
+    mkdir("resources");
+end
 write_png(gcf, "resources/light.png");
 
 %% Make dark plot

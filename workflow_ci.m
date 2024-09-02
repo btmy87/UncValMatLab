@@ -6,6 +6,9 @@
 if ~exist("test-results", "dir")
     mkdir("test-results");
 end
+if ~exist("resources", "dir")
+    mkdir("resources");
+end
 
 % set these outputs up top incase anything fails catastrophically
 out = struct();
