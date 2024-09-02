@@ -13,7 +13,7 @@ z2mc = xmc - 1.5.*ymc;
 
 figure(Name="CovPlot", Units="in", Position=[1,1,9,4]);
 tiledlayout("flow")
-ha = nexttile;hold on;
+exttile;hold on;
 xlabel("x"); ylabel("y");
 scatter(xmc, ymc, "filled", ...
     MarkerFaceAlpha=50/255, ...
