@@ -627,5 +627,3 @@ y = UncVal(0, sqrt(3), "y", uncType="uniform");
 assertClose(std(x), 1.0);
 assertClose(std(y), 1.0);
 
-%% Intentionally fail test
-assert(false);
