@@ -87,11 +87,26 @@ classdef TEST_UncVal_pdf2 < matlab.unittest.TestCase
             tc.verifyError(@() pdf2(y, x), "UncVal:NotSupported");
             tc.verifyError(@() pdf2(y, y), "UncVal:NotSupported");
         end
+
         function test_perfect_corr(tc)
             % should produce an error if perfectly correlated
             x = UncVal(0, 1, "x");
             y = x;
             tc.verifyError(@() pdf2(x, y), "UncVal:NotSupported");
+        end
+
+        function test_integral(tc)
+            % test integral under pdf
+            x = UncVal(1, 1, "x");
+            y = UncVal(2, 2, "y");
+            [xi, yi] = ndgrid(linspace(-4, 4, 161).*std(x)+mean(x), ...
+                              linspace(-4, 4, 162).*std(y)+mean(y));
+            p = pdf2(x, y, xi, yi);
+
+            p1 = trapz(yi(1, :), p, 2);
+            p2 = trapz(xi(:, 1), p1);
+            tc.verifyClose(p2, 1.0);
+
         end
     end
 end
