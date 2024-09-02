@@ -1,7 +1,7 @@
 # UncValMatLab
 MatLab class for handling uncertain values.
 
-[![CI](https://github.com/btmy87/UncValMatLab/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/btmy87/UncValMatLab/actions/workflows/ci.yml)
+![CI](resources/ci.svg)
 
 Windows, R2024a:
 ![TestResults](resources/PCWIN64-R2024a-tests.svg)
