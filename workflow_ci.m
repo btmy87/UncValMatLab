@@ -11,7 +11,7 @@ if ~exist("resources", "dir")
 end
 
 % fail workflow for testing.
-assert(false);
+% assert(false);
 
 % set these outputs up top incase anything fails catastrophically
 out = struct();
