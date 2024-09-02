@@ -17,7 +17,7 @@ out.CI_WARNINGS = "Not Run";
 out.CI_ERRORS = "Not Run";
 out.CI_WARNINGS_COLOR = "#A2142F";
 out.CI_ERRORS_COLOR = "#A2142F";
-writestruct(out, "test-results/summary.json", PrettyPrint=false);
+%writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TestReportPlugin
@@ -87,7 +87,7 @@ else
     out.CI_ERRORS_COLOR = "#77AC30"; % green
 end
 
-writestruct(out, "test-results/summary.json", PrettyPrint=false);
+%writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 % print out summary info for the GitHub Actions log
 disp(matlabRelease)
