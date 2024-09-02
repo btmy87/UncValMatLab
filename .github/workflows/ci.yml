@@ -15,11 +15,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   test:
-    permissions:
-      contents: write
-
     strategy:
-      max-parallel: 4
       matrix: 
         version: [R2024a, R2022b]
         os: [ubuntu-latest, windows-latest]
@@ -32,6 +28,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Get badge OS Name
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            echo "archstr=GLNXA64" >> "$GITHUB_ENV"
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+            echo "archstr=PCWIN64" >> "$GITHUB_ENV"
+          else
+            echo "archstr=ARCH_UNKNOWN" >> "$GITHUB_ENV"
+          fi
 
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v2
@@ -58,8 +64,73 @@ jobs:
           name: code-coverage-${{ matrix.os }}-${{ matrix.version }}
           path: test-results/coverage.xml
 
-      - name: Push badges
+      - name: Upload badges
         if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: badges-${{ matrix.os }}-${{ matrix.version }}
+          path: resources/${{ env.archstr }}-${{ matrix.version }}-*.svg
+
+      #- name: Push badges
+      #  if: always()
+      #  shell: bash
+      #  run: |
+      #    git config user.name "github-actions[bot]"
+      #    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #    git pull
+      #    git add resources/*
+      #    if ! git diff-index --quiet HEAD; then
+      #      git commit -m "Update badges from GitHub Actions job"
+      #      git push
+      #    fi
+
+  readme_images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MATLAB
+        uses: matlab-actions/setup-matlab@v2
+        with: 
+          cache: true
+
+      - name: Make new readme images
+        uses: matlab-actions/run-command@v2
+        with:
+          command: make_graphics
+
+      - name: Upload images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: readme-images
+          path: resources/*.png
+
+  update_resources:
+    needs: [test, readme_images]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download badges
+        uses: actions/download-artifact@v4
+        with:
+          pattern: badges-*
+          path: resources/
+          merge-multiple: true
+
+      - name: Download images
+        uses: actions/download-artifact@v4
+        with:
+          name: readme-images
+          path: resources/
+          merge-multiple: true
+
+      - name: Push resources
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -67,7 +138,6 @@ jobs:
           git pull
           git add resources/*
           if ! git diff-index --quiet HEAD; then
-            git commit -m "Resources added by GitHub Actions job"
+            git commit -m "Update resources from GitHub Actions job"
             git push
           fi
-
