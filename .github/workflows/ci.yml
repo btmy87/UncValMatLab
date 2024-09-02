@@ -52,21 +52,18 @@ jobs:
           command: workflow_ci
 
       - name: Upload test results
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.os }}-${{ matrix.version }}
           path: test-results/results.xml
 
       - name: Upload code coverage
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-${{ matrix.os }}-${{ matrix.version }}
           path: test-results/coverage.xml
 
       - name: Upload badges
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: badges-${{ matrix.os }}-${{ matrix.version }}
