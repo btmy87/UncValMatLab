@@ -4,34 +4,34 @@ MatLab class for handling uncertain values.
 <table>
   <tr>
     <td>Windows, R2024a: </td>
-    <td><img alt="TestResults"  src="resources/PCWIN64-R2024a-tests.svg" height="30"></td>
-    <td><img alt="TestCoverage" src="resources/PCWIN64-R2024a-coverage.svg" height="30"></td>
-    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2024a-errors.svg" height="30"></td>
-    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2024a-warnings.svg" height="30"></td>
+    <td><img alt="TestResults"  src="resources/PCWIN64-R2024a-tests.svg" style="height:30px;width:auto"></td>
+    <td><img alt="TestCoverage" src="resources/PCWIN64-R2024a-coverage.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2024a-errors.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2024a-warnings.svg" style="height:30px;width:auto"></td>
   </tr>
 
   <tr>
     <td>Linux, R2024a:</td>
-    <td><img alt="TestResults"  src="resources/GLNXA64-R2024a-tests.svg" height="30"></td>
-    <td><img alt="TestCoverage" src="resources/GLNXA64-R2024a-coverage.svg" height="30"></td>
-    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2024a-errors.svg" height="30"></td>
-    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2024a-warnings.svg" height="30"></td>
+    <td><img alt="TestResults"  src="resources/GLNXA64-R2024a-tests.svg" style="height:30px;width:auto"></td>
+    <td><img alt="TestCoverage" src="resources/GLNXA64-R2024a-coverage.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2024a-errors.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2024a-warnings.svg" style="height:30px;width:auto"></td>
   </tr>
 
   <tr>
     <td>Windows, R2022b:</td>
-    <td><img alt="TestResults"  src="resources/PCWIN64-R2022b-tests.svg" height="30"></td>
-    <td><img alt="TestCoverage" src="resources/PCWIN64-R2022b-coverage.svg" height="30"></td>
-    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2022b-errors.svg" height="30"></td>
-    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2022b-warnings.svg" height="30"></td>
+    <td><img alt="TestResults"  src="resources/PCWIN64-R2022b-tests.svg" style="height:30px;width:auto"></td>
+    <td><img alt="TestCoverage" src="resources/PCWIN64-R2022b-coverage.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeErrors"   src="resources/PCWIN64-R2022b-errors.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeWarnings" src="resources/PCWIN64-R2022b-warnings.svg" style="height:30px;width:auto"></td>
   </tr>
 
   <tr>
     <td>Linux, R2022b:</td>
-    <td><img alt="TestResults"  src="resources/GLNXA64-R2022b-tests.svg" height="30"></td>
-    <td><img alt="TestCoverage" src="resources/GLNXA64-R2022b-coverage.svg" height="30"></td>
-    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2022b-errors.svg" height="30"></td>
-    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2022b-warnings.svg" height="30"></td>
+    <td><img alt="TestResults"  src="resources/GLNXA64-R2022b-tests.svg" style="height:30px;width:auto"></td>
+    <td><img alt="TestCoverage" src="resources/GLNXA64-R2022b-coverage.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeErrors"   src="resources/GLNXA64-R2022b-errors.svg" style="height:30px;width:auto"></td>
+    <td><img alt="CodeWarnings" src="resources/GLNXA64-R2022b-warnings.svg" style="height:30px;width:auto"></td>
   </tr>
 </table>
 
