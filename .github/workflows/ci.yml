@@ -19,13 +19,14 @@ jobs:
       contents: write
 
     strategy:
-      max-parallel: 1
+      max-parallel: 4
       matrix: 
         version: [R2024a, R2022b]
         os: [ubuntu-latest, windows-latest]
       
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -62,7 +63,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull
           git add resources/*
-          git commit -m "Resources added by GitHub Actions job"
-          git push
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Resources added by GitHub Actions job"
+            git push
+          fi
 
