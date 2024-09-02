@@ -1,0 +1,44 @@
+# Test different OS versions
+# Can't do many different versions of MatLab, most on't support Apple Silicon
+
+name: Test_OS
+
+# Controls when the workflow will run
+on: 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    strategy:
+      matrix: 
+        version: [R2024a]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+      
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MATLAB
+        uses: matlab-actions/setup-matlab@v2
+        with: 
+          release: ${{ matrix.version }}
+
+      - name: Run tests
+        uses: matlab-actions/run-tests@v2
+        with:
+          test-results-junit: test-results/results.xml
+          code-coverage-cobertura: test-results/coverage.xml
+
+      - name: Upload test results and coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-${{ matrix.version }}
+          path: test-results/*.xml
