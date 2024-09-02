@@ -15,6 +15,18 @@ Linux, R2024a:
 ![CodeErrors](resources/GLNXA64-R2024a-errors.svg)
 ![CodeWarnings](resources/GLNXA64-R2024a-warnings.svg)
 
+Windows, R2022b:
+![TestResults](resources/PCWIN64-R2022b-tests.svg)
+![TestCoverage](resources/PCWIN64-R2022b-coverage.svg)
+![CodeErrors](resources/PCWIN64-R2022b-errors.svg)
+![CodeWarnings](resources/PCWIN64-R2022b-warnings.svg)
+
+Linux, R2022b:
+![TestResults](resources/GLNXA64-R2022b-tests.svg)
+![TestCoverage](resources/GLNXA64-R2022b-coverage.svg)
+![CodeErrors](resources/GLNXA64-R2022b-errors.svg)
+![CodeWarnings](resources/GLNXA64-R2022b-warnings.svg)
+
 _Badges only valid on main branch_ 
 
 Propagates uncertainty through basic matlab calculations, tracking sources
