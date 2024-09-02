@@ -89,13 +89,6 @@ jobs:
           path: resources/
           merge-multiple: true
 
-      - name: Download images
-        uses: actions/download-artifact@v4
-        with:
-          name: readme-images
-          path: resources/
-          merge-multiple: true
-
       - name: Push resources
         shell: bash
         run: |
