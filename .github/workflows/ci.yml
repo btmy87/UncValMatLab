@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get badge OS Name
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             echo "archstr=GLNXA64" >> "$GITHUB_ENV"
@@ -70,19 +71,6 @@ jobs:
         with:
           name: badges-${{ matrix.os }}-${{ matrix.version }}
           path: resources/${{ env.archstr }}-${{ matrix.version }}-*.svg
-
-      #- name: Push badges
-      #  if: always()
-      #  shell: bash
-      #  run: |
-      #    git config user.name "github-actions[bot]"
-      #    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      #    git pull
-      #    git add resources/*
-      #    if ! git diff-index --quiet HEAD; then
-      #      git commit -m "Update badges from GitHub Actions job"
-      #      git push
-      #    fi
 
   readme_images:
     runs-on: ubuntu-latest
@@ -135,7 +123,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull
           git add resources/*
           if ! git diff-index --quiet HEAD; then
             git commit -m "Update resources from GitHub Actions job"
