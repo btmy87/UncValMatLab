@@ -90,6 +90,19 @@ end
 writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
 % print out summary info for the GitHub Actions log
+disp(matlabRelease)
 disp(out);
+
+% write out badges
+rel = matlabRelease.Release;
+arch = string(computer);
+get_badge("Tests Passed", out.CI_TEST_PASSED, out.CI_TEST_COLOR, ...
+    "resources/"+arch+"-"+rel+"-tests.svg");
+get_badge("Coverage", out.CI_COVERAGE, out.CI_COVERAGE_COLOR, ...
+    "resources/"+arch+"-"+rel+"-coverage.svg");
+get_badge("Errors", out.CI_ERRORS, out.CI_ERRORS_COLOR, ...
+    "resources/"+arch+"-"+rel+"-errors.svg");
+get_badge("Warnings", out.CI_WARNINGS, out.CI_WARNINGS_COLOR, ...
+    "resources/"+arch+"-"+rel+"-warnings.svg");
 
 assertSuccess(results);

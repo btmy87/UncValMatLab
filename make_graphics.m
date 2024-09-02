@@ -41,7 +41,7 @@ nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
 errorbar(x, y);
 
-write_png(gcf);
+write_png(gcf, "resources/light.png");
 
 %% Make dark plot
 figure(Name="dark", ...
@@ -80,10 +80,12 @@ nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
 errorbar(x, y);
 
-write_png(gcf);
+write_png(gcf, "resources/dark.png");
 
 %% Utility function
-function write_png(hf)
+function write_png(hf, filename)
+% function to write a png with a transparent figure background
+% ideal for publishing to github
 
 imdata = getframe(hf);
 a = double(imdata.cdata)./255.0;
@@ -91,6 +93,6 @@ cref = reshape(hf.Color, [1, 1, 3]);
 alpha = ones(size(a, [1, 2]));
 idx = all(a == cref, 3);
 alpha(idx) = 0;
-imwrite(imdata.cdata, hf.Name + ".png", Alpha=alpha);
+imwrite(imdata.cdata, filename, Alpha=alpha);
 
 end
