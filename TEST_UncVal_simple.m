@@ -627,3 +627,9 @@ y = UncVal(0, sqrt(3), "y", uncType="uniform");
 assertClose(std(x), 1.0);
 assertClose(std(y), 1.0);
 
+%% Test median
+x = UncVal(0, 1, "x");
+y = UncVal([0, 1, 2], 0.5, "y");
+
+assertClose(median(x), 0);
+assertClose(median(y), [0, 1, 2]);
