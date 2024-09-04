@@ -633,3 +633,17 @@ y = UncVal([0, 1, 2], 0.5, "y");
 
 assertClose(median(x), 0);
 assertClose(median(y), [0, 1, 2]);
+
+%% Test IQR
+% test interquartile range for the standard distribution
+% should be ~ 1.349
+x = UncVal(0, 1, "x");
+assert(abs(iqr(x)-1.349)<0.001);
+
+% should be the same if we shift the distribution
+y = UncVal(7, 1, "y");
+assert(abs(iqr(y)-1.349)<0.001);
+
+% should change with the standard deviation
+z = UncVal(7, 2, "z");
+assert(abs(iqr(z)-1.349*2)<0.002);
