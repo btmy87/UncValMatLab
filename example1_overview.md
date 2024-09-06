@@ -119,6 +119,7 @@ title(string(z2), FontWeight="normal");
   <source media="(prefers-color-scheme: dark)" srcset="example1_overview_media/dark/figure_1.png">
    <source media="(prefers-color-scheme: light)" srcset="example1_overview_media/light/figure_1.png">
    <img alt="figure_1.png" src="example1_overview_media/light/figure_1.png"></picture>
+# Correlated Variables
 
 Correlation between variables is handled appropriately.  The trigonometric identitiy below is always 1.0, even if the inputs are uncertain.
 
