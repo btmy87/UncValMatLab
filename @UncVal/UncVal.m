@@ -81,8 +81,8 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
             end
 
             % expand the uncertainty to match the size of val in case
-            % the user gives a scalar unc and an array val
-            obj.val = val;
+            % the user gives a scalar unc and an array val, and vice versa
+            obj.val = val + zeros(size(unc));
             obj.id = id;
 
             % create dictionary to track srcs of variance.  Expand out
