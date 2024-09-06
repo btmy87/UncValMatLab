@@ -111,7 +111,8 @@ errorbar(x, y);
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="example2_arrays_media/dark/figure_0.png">
    <source media="(prefers-color-scheme: light)" srcset="example2_arrays_media/light/figure_0.png">
-   <img alt="figure_0.png" src="example2_arrays_media/light/figure_0.png"></picture>
+   <img alt="figure_0.png" src="example2_arrays_media/light/figure_0.png">
+</picture>
 # Functions that Reduce an Array
 
 Many functions that normally reduce an array, do not reduce arrays of `UncVal` objects.  These functions can be thought of as acting on the distribution in the `UncVal` object, and not on the array.  For example, the `mean` and `std` functions, return the mean and standard deviation of the underlying distributions.  The array returned is the same size as the `UncVal` array.

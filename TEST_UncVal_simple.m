@@ -288,9 +288,6 @@ assert(numEntries(z.srcs) == 2);
 
 %% Test exponentials and logs
 x = UncVal(1.0, 0.1, "x");
-y1 = log(x); %#ok<NASGU>
-y2 = log10(x); %#ok<NASGU>
-y3 = exp(x); %#ok<NASGU>
 
 y4 = exp(log(x));
 assertClose(y4.val, 1.0);

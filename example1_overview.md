@@ -80,7 +80,8 @@ ha.YAxis(1).Limits = [0, 0.5]; % make tick marks align.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="example1_overview_media/dark/figure_0.png">
    <source media="(prefers-color-scheme: light)" srcset="example1_overview_media/light/figure_0.png">
-   <img alt="figure_0.png" src="example1_overview_media/light/figure_0.png"></picture>
+   <img alt="figure_0.png" src="example1_overview_media/light/figure_0.png">
+</picture>
 # Propagate Uncertainty
 
 Uncertainty is propagated through calculations.  Sources of uncertainty are tracked individually.
@@ -118,7 +119,8 @@ title(string(z2), FontWeight="normal");
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="example1_overview_media/dark/figure_1.png">
    <source media="(prefers-color-scheme: light)" srcset="example1_overview_media/light/figure_1.png">
-   <img alt="figure_1.png" src="example1_overview_media/light/figure_1.png"></picture>
+   <img alt="figure_1.png" src="example1_overview_media/light/figure_1.png">
+</picture>
 # Correlated Variables
 
 Correlation between variables is handled appropriately.  The trigonometric identitiy below is always 1.0, even if the inputs are uncertain.

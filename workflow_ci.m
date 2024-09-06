@@ -92,6 +92,7 @@ if numErrors > 0
 else
     out.CI_ERRORS_COLOR = "#77AC30"; % green
 end
+disp(issues);
 
 %writestruct(out, "test-results/summary.json", PrettyPrint=false);
 
