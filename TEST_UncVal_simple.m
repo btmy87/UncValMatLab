@@ -644,3 +644,14 @@ assert(abs(iqr(y)-1.349)<0.001);
 % should change with the standard deviation
 z = UncVal(7, 2, "z");
 assert(abs(iqr(z)-1.349*2)<0.002);
+
+%% Test power edge cases
+x = UncVal(0, 1, "x");
+y = x.^2;
+
+assert(~isnan(var(y)));
+assertClose(var(y), 0.0);
+
+x1 = UncVal(-1, 1, "x");
+y1 = x1.^2;
+assertClose(y1.val, 1.0);
