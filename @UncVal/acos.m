@@ -1,5 +1,5 @@
 function obj = acos(x)
-%ACOS acos function for UncVal objects
+%ACOS inverse cosine function for UncVal objects
 obj = x;
 obj.id = UncVal.calcId;
 obj.uncType = UncVal.calcType;

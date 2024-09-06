@@ -1,4 +1,5 @@
 function out = cat(dim,varargin)
+% cat concatenate UncVal arrays
 numX = nargin-1;
 
 % force everything to UncVal objects

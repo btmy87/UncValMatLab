@@ -1,5 +1,5 @@
 function q = quantile(obj, p)
-%QUANTILE Returns the quantile of e UncVal object at the given probability
+%QUANTILE Returns the quantile of UncVal object at the given probability
 % this is the inverse of the CDF function
 %
 % q = quantile(obj, p) returns the quantile at a given probability level

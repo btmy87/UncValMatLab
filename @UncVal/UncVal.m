@@ -121,13 +121,14 @@ classdef UncVal < matlab.mixin.indexing.RedefinesParen
         C = cat(dim,varargin);
 
     end
-    methods (Static=true)
+    methods (Static=true, Access=protected)
         obj = UncValInt(val, xvar, srcs); % internal use constructor
         obj = makeUncVal(val);
         str = makeId();
+    end
+    methods (Static=true)
         obj = empty(varargin);
         srcs = propagate(xSrcs, ySrcs, Cx, Cy);
-        % h = errorbar(varargin);
     end
     methods (Access=protected)
         varargout = parenReference(obj, indexOp);
