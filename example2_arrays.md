@@ -20,7 +20,7 @@ disp(y)
         val: [0 0.0204 0.0816 0.1837 0.3265 0.5102 0.7347 1]
          id: "calc"
     uncType: "1-sigma"
-    std_unc: [NaN 0.0404 0.0416 0.0435 0.0461 0.0492 0.0527 0.0566]
+    std_unc: [0.0400 0.0404 0.0416 0.0435 0.0461 0.0492 0.0527 0.0566]
 ```
 
 Elements can be accessed like a normal array.
@@ -113,6 +113,7 @@ errorbar(x, y);
    <source media="(prefers-color-scheme: light)" srcset="example2_arrays_media/light/figure_0.png">
    <img alt="figure_0.png" src="example2_arrays_media/light/figure_0.png">
 </picture>
+
 # Functions that Reduce an Array
 
 Many functions that normally reduce an array, do not reduce arrays of `UncVal` objects.  These functions can be thought of as acting on the distribution in the `UncVal` object, and not on the array.  For example, the `mean` and `std` functions, return the mean and standard deviation of the underlying distributions.  The array returned is the same size as the `UncVal` array.
