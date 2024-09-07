@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with Actions
+
+name: R2022b
+
+# Controls when the workflow will run
+on: 
+  # Triggers the workflow on push or pull request on main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test:
+    strategy:
+      matrix: 
+        version: [R2022b]
+        os: [ubuntu-latest, windows-latest, macos-13]
+      
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MATLAB
+        uses: matlab-actions/setup-matlab@v2
+        with: 
+          release: ${{ matrix.version }}
+
+      - name: Run tests
+        uses: matlab-actions/run-command@v2
+        with:
+          command: workflow_ci
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-${{ matrix.version }}
+          path: test-results/results.xml
+
+      - name: Upload code coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-${{ matrix.os }}-${{ matrix.version }}
+          path: test-results/coverage.xml
+

@@ -1,21 +1,28 @@
-# Test different OS versions
-# Can't do many different versions of MatLab, most on't support Apple Silicon
+# This is a basic workflow to help you get started with Actions
 
-name: Test_OS
+name: R2024a
 
 # Controls when the workflow will run
 on: 
+  # Triggers the workflow on push or pull request on main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  pull_request:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   test:
     strategy:
       matrix: 
         version: [R2024a]
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest]
       
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -32,14 +39,21 @@ jobs:
           release: ${{ matrix.version }}
 
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-command@v2
         with:
-          test-results-junit: test-results/results.xml
-          code-coverage-cobertura: test-results/coverage.xml
+          command: workflow_ci
 
-      - name: Upload test results and coverage
+      - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.os }}-${{ matrix.version }}
-          path: test-results/*.xml
+          path: test-results/results.xml
+
+      - name: Upload code coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-${{ matrix.os }}-${{ matrix.version }}
+          path: test-results/coverage.xml
+

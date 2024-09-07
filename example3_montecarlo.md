@@ -34,7 +34,7 @@ fprintf("mean(x  ) = %.4f, std(x  ) = %.4f\n" + ...
 
 ```matlabTextOutput
 mean(x  ) = 0.0000, std(x  ) = 1.0000
-mean(xmc) = 0.0116, std(xmc) = 0.9944
+mean(xmc) = -0.0428, std(xmc) = 1.0272
 ```
 # Uncertainty Propagation
 
@@ -62,7 +62,7 @@ fprintf("z   = %7.4f ± %7.4f, corrcoeff = %7.4f\n" + ...
 
 ```matlabTextOutput
 z   =  0.0000 ±  0.2828, corrcoeff =  0.7071
-zmc = -0.0024 ±  0.2862, corrcoeff =  0.7084
+zmc = -0.0006 ±  0.2812, corrcoeff =  0.7094
 ```
 
 ```matlab
@@ -104,7 +104,7 @@ fprintf("z   = %7.4f ± %7.4f, corrcoeff = %7.4f\n" + ...
 
 ```matlabTextOutput
 z   =  0.0001 ±  2.0004, corrcoeff =  0.0200
-zmc =  1.0374 ±  3.5431, corrcoeff = -0.0637
+zmc =  0.9911 ±  3.4715, corrcoeff = -0.0264
 ```
 
 ```matlab
