@@ -41,7 +41,7 @@ import matlab.unittest.plugins.XMLPlugin;
 import matlab.unittest.plugins.codecoverage.CoberturaFormat;
 
 % create a test suite and runner
-suite = testsuite([".", ".\test"]);
+suite = testsuite([".", "test"]);
 runner = TestRunner.withTextOutput();
 
 % add test report plugin

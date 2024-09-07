@@ -40,7 +40,7 @@ plot(x, y);
 t.Title.Color = get(gca, "XColor"); % I have some funny defaults
 t.Title.FontName = get(gca, "FontName");
 
-ha = nexttile;hold on;xlabel("x");ylabel("y");
+nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x-only", FontWeight="normal")
 errorbar(x, y.val, Marker="o");
 
