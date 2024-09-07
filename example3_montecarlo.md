@@ -20,9 +20,9 @@ plot(xp, p);
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example3_montecarlo_media/dark/figure_0.png">
-   <source media="(prefers-color-scheme: light)" srcset="example3_montecarlo_media/light/figure_0.png">
-   <img alt="figure_0.png" src="example3_montecarlo_media/light/figure_0.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example3_montecarlo_0_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example3_montecarlo_0_light.svg">
+  <img alt="figure_0" src="resources/example3_montecarlo_0_light.svg">
 </picture>
 
 
@@ -34,7 +34,7 @@ fprintf("mean(x  ) = %.4f, std(x  ) = %.4f\n" + ...
 
 ```matlabTextOutput
 mean(x  ) = 0.0000, std(x  ) = 1.0000
-mean(xmc) = 0.0213, std(xmc) = 1.0072
+mean(xmc) = 0.0116, std(xmc) = 0.9944
 ```
 # Uncertainty Propagation
 
@@ -62,7 +62,7 @@ fprintf("z   = %7.4f ± %7.4f, corrcoeff = %7.4f\n" + ...
 
 ```matlabTextOutput
 z   =  0.0000 ±  0.2828, corrcoeff =  0.7071
-zmc = -0.0020 ±  0.2839, corrcoeff =  0.7040
+zmc = -0.0024 ±  0.2862, corrcoeff =  0.7084
 ```
 
 ```matlab
@@ -77,9 +77,9 @@ errorbar(x, z);
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example3_montecarlo_media/dark/figure_1.png">
-   <source media="(prefers-color-scheme: light)" srcset="example3_montecarlo_media/light/figure_1.png">
-   <img alt="figure_1.png" src="example3_montecarlo_media/light/figure_1.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example3_montecarlo_1_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example3_montecarlo_1_light.svg">
+  <img alt="figure_1" src="resources/example3_montecarlo_1_light.svg">
 </picture>
 
 # Limitations of Linear Propagation
@@ -104,7 +104,7 @@ fprintf("z   = %7.4f ± %7.4f, corrcoeff = %7.4f\n" + ...
 
 ```matlabTextOutput
 z   =  0.0001 ±  2.0004, corrcoeff =  0.0200
-zmc =  1.0265 ±  3.5608, corrcoeff =  0.0078
+zmc =  1.0374 ±  3.5431, corrcoeff = -0.0637
 ```
 
 ```matlab
@@ -119,8 +119,8 @@ errorbar(x, z);
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example3_montecarlo_media/dark/figure_2.png">
-   <source media="(prefers-color-scheme: light)" srcset="example3_montecarlo_media/light/figure_2.png">
-   <img alt="figure_2.png" src="example3_montecarlo_media/light/figure_2.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example3_montecarlo_2_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example3_montecarlo_2_light.svg">
+  <img alt="figure_2" src="resources/example3_montecarlo_2_light.svg">
 </picture>
 

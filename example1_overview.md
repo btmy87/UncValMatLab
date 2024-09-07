@@ -78,9 +78,9 @@ ha.YAxis(1).Limits = [0, 0.5]; % make tick marks align.
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example1_overview_media/dark/figure_0.png">
-   <source media="(prefers-color-scheme: light)" srcset="example1_overview_media/light/figure_0.png">
-   <img alt="figure_0.png" src="example1_overview_media/light/figure_0.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example1_overview_0_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example1_overview_0_light.svg">
+  <img alt="figure_0" src="resources/example1_overview_0_light.svg">
 </picture>
 
 # Propagate Uncertainty
@@ -118,9 +118,9 @@ title(string(z2), FontWeight="normal");
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example1_overview_media/dark/figure_1.png">
-   <source media="(prefers-color-scheme: light)" srcset="example1_overview_media/light/figure_1.png">
-   <img alt="figure_1.png" src="example1_overview_media/light/figure_1.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example1_overview_1_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example1_overview_1_light.svg">
+  <img alt="figure_1" src="resources/example1_overview_1_light.svg">
 </picture>
 
 # Correlated Variables

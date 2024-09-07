@@ -94,14 +94,15 @@ title("plot command", FontWeight="normal");
 plot(x, y);
 
 t.Title.Color = get(gca, "XColor"); % I have some funny defaults
+t.Title.FontName = get(gca, "FontName");
 
 ha = nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x-only", FontWeight="normal")
-errorbar(x, y.val, Marker="o", MarkerFaceColor=ha.Color);
+errorbar(x, y.val, Marker="o");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, y-only", FontWeight="normal")
-errorbar(x.val, y, Marker="d", MarkerFaceColor=ha.Color);
+errorbar(x.val, y, Marker="d");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
@@ -109,9 +110,9 @@ errorbar(x, y);
 ```
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="example2_arrays_media/dark/figure_0.png">
-   <source media="(prefers-color-scheme: light)" srcset="example2_arrays_media/light/figure_0.png">
-   <img alt="figure_0.png" src="example2_arrays_media/light/figure_0.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/example2_arrays_0_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/example2_arrays_0_light.svg">
+  <img alt="figure_0" src="resources/example2_arrays_0_light.svg">
 </picture>
 
 # Functions that Reduce an Array
