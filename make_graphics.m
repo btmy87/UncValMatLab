@@ -21,14 +21,15 @@ hf = figure(Name="light", ...
     defaultAxesFontSize=11, ...
     defaultErrorBarLineWidth=1.5, ...
     defaultLineLineWidth=1.5, ...
-    defaultLineMarkerFaceColor="w", ...
+    defaultLineMarkerFaceColor=[1,1,1].*254./255, ...
+    defaultErrorBarMarkerFaceColor=[1,1,1].*254./255, ...
     defaultAxesLineWidth=1.5, ...
     defaultAxesGridLineWidth=1.0, ...
     defaultAxesGridAlpha=0.3, ...
     defaultTextFontName="FixedWidth", ...
     defaultAxesFontName="FixedWidth", ...
     Units="pixels", ...
-    Position=[10, 10, 800, 500]);
+    Position=[100, 100, 800, 500]);
 
 t = tiledlayout("flow", padding="compact", TileSpacing="compact");
 title(t, "UncVal Plotting Options");
@@ -41,11 +42,11 @@ t.Title.FontName = get(gca, "FontName");
 
 ha = nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x-only", FontWeight="normal")
-errorbar(x, y.val, Marker="o", MarkerFaceColor=ha.Color);
+errorbar(x, y.val, Marker="o");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, y-only", FontWeight="normal")
-errorbar(x.val, y, Marker="d", MarkerFaceColor=ha.Color);
+errorbar(x.val, y, Marker="d");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
@@ -54,22 +55,12 @@ errorbar(x, y);
 if ~exist("resources", "dir")
     mkdir("resources");
 end
-% hf.Color = "none";
-% set(findobj(hf, "Type", "Axes"), "Color", "none");
-% print(hf, "resources/light.svg", "-dsvg");
 
 delete("resources/opaque.svg");
 print(hf, "resources/opaque.svg", "-dsvg");
 opaqueLines = readlines("resources/opaque.svg");
 lightLines = regexprep(opaqueLines, "fill:white", "fill:none");
 writelines(lightLines, "resources/light.svg", WriteMode="overwrite");
-
-% write_png(hf, "resources/light.png");
-% saveas(hf, "resources/opaque.png");
-% 
-% hf.Color = "none";
-% set(findobj(hf, "Type", "Axes"), "Color", "none");
-
 
 %% Make dark plot
 hf = figure(Name="dark", ...
@@ -86,6 +77,7 @@ hf = figure(Name="dark", ...
     defaultErrorBarLineWidth=1.5, ...
     defaultLineLineWidth=1.5, ...
     defaultLineMarkerFaceColor=[1,1,1].*20/255, ...
+    defaultErrorBarMarkerFaceColor=[1,1,1].*20/255, ...
     defaultAxesLineWidth=1.5, ...
     defaultAxesGridLineWidth=1.0, ...
     defaultAxesGridAlpha=0.3, ...
@@ -93,7 +85,7 @@ hf = figure(Name="dark", ...
     defaultAxesFontName="FixedWidth", ...
     InvertHardcopy="off", ...
     Units="pixels", ...
-    Position=[10, 10, 800, 500]);
+    Position=[100, 100, 800, 500]);
 
 t = tiledlayout("flow", padding="compact", TileSpacing="compact");
 title(t, "UncVal Plotting Options", FontSize=14);
@@ -106,35 +98,18 @@ t.Title.FontName = get(gca, "FontName");
 
 ha = nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x-only", FontWeight="normal")
-errorbar(x, y.val, Marker="o", MarkerFaceColor=ha.Color);
+errorbar(x, y.val, Marker="o");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, y-only", FontWeight="normal")
-errorbar(x.val, y, Marker="d", MarkerFaceColor=ha.Color);
+errorbar(x.val, y, Marker="d");
 
 nexttile;hold on;xlabel("x");ylabel("y");
 title("errorbar, x and y", FontWeight="normal")
 errorbar(x, y);
 
-% write_png(gcf, "resources/dark.png");
 delete("resources/dark.svg");
 print(hf, "resources/dark.svg", "-dsvg");
 tempLines = readlines("resources/dark.svg");
 darkLines = regexprep(tempLines, "fill:black", "fill:none");
 writelines(darkLines, "resources/dark.svg", WriteMode="overwrite");
-
-%% Utility function
-function write_png(hf, filename)
-% function to write a png with a transparent figure background
-% ideal for publishing to github
-
-imdata = getframe(hf);
-a = double(imdata.cdata)./255.0;
-cref = reshape(hf.Color, [1, 1, 3]);
-alpha = ones(size(a, [1, 2]));
-idx = all(a == cref, 3);
-alpha(idx) = 0;
-
-imwrite(a, filename, Alpha=alpha);
-
-end
