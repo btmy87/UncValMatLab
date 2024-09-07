@@ -86,7 +86,7 @@ passed directly to plot calls.  Errorbars are automatically configured.
 Correlated errors are plotted as ellipses.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="resources/dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="resources/light.png">
-  <img alt="Example plot with error bars." src="resources/opaque.png">
+  <source media="(prefers-color-scheme: dark)" srcset="resources/dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="resources/light.svg">
+  <img alt="Example plot with error bars." src="resources/opaque.svg">
 </picture>
