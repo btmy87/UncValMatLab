@@ -2,6 +2,15 @@
 % using this script instead of default test workflow
 % want more control over reporting the results
 
+% start fresh
+close all;
+clear classes; %#ok<CLCLS>
+clc
+
+% add path
+% test running seems to run from within the test folder
+addpath(pwd); 
+
 % make a directory for test results
 if ~exist("test-results", "dir")
     mkdir("test-results");
@@ -32,7 +41,7 @@ import matlab.unittest.plugins.XMLPlugin;
 import matlab.unittest.plugins.codecoverage.CoberturaFormat;
 
 % create a test suite and runner
-suite = testsuite();
+suite = testsuite([".", ".\test"]);
 runner = TestRunner.withTextOutput();
 
 % add test report plugin
