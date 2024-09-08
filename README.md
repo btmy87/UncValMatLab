@@ -4,8 +4,7 @@
 MatLab class for handling uncertain values.
 
 
-<picture><img alt="R2024a badge" src=https://github.com/btmy87/UncValMatLab/actions/workflows/R2024a.yml/badge.svg ></picture>
-<picture><img alt="R2022b badge" src=https://github.com/btmy87/UncValMatLab/actions/workflows/R2022b.yml/badge.svg ></picture>
+<picture><img alt="R2024a badge" src=https://github.com/btmy87/UncValMatLab/actions/workflows/R2024a.yml/badge.svg ></picture><picture><img alt="R2022b badge" src=https://github.com/btmy87/UncValMatLab/actions/workflows/R2022b.yml/badge.svg ></picture>
 
 
 Propagates uncertainty through basic matlab calculations, tracking sources of uncertainty. Most basic math operations are supported, along with some trigonometry and exponents.
