@@ -10,6 +10,13 @@ absTol = 1e-10;
 isClose = @(x, y) abs(x-y) < (relTol.*abs(x) + absTol);
 assertClose = @(x, y) assert(all(isClose(x, y), 'all'));
 
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
+
+
 %% Test Plus with 2 UncVals
 x = UncVal(1.0, 0.1, "x");
 y = UncVal(2.0, 0.2, "y");
@@ -655,3 +662,30 @@ assertClose(var(y), 0.0);
 x1 = UncVal(-1, 1, "x");
 y1 = x1.^2;
 assertClose(y1.val, 1.0);
+
+%% Test Cart2Pol
+% 30 degrees with a radius of 2
+x1 = UncVal(sqrt(3), 0.1, "x");
+y1 = UncVal(1, 0.1, "y");
+[theta, r] = cart2pol(x1, y1);
+
+assertClose(theta.val, pi/6);
+assertClose(r.val, 2.0);
+
+[x2, y2] = pol2cart(theta, r);
+assertClose(x2.val, x1.val);
+assertClose(y2.val, y1.val);
+
+%% Test Cart2sph
+% mostly checking for no errors
+x1 = UncVal(1, 0.1, "x");
+y1 = UncVal(1, 0.1, "y");
+z1 = UncVal(1, 0.1, "z");
+
+[az, el, r] = cart2sph(x1, y1, z1);
+assertClose(r.val, sqrt(3));
+
+[x2, y2, z2] = sph2cart(az, el, r);
+assertClose(x2.val, x1.val);
+assertClose(y2.val, y1.val);
+assertClose(z2.val, z1.val);
