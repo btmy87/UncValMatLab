@@ -150,6 +150,29 @@ classdef TEST_UncVal_MC < matlab.unittest.TestCase
     
         end
 
+        function testFunc1(tc, x, s)
+            x0 = -5 + 10.*x;
+            xt = linspace(-5, 5, 101);
+            yt = cos(xt);
+            f = griddedInterpolant(xt, yt);
+
+            x1 = UncVal(x0, s, "x1");
+            y1 = func1(x1, @(x) f(x));
+
+            % then propagate uncertainty with MC
+            x2 = x1.val + randn([1, 1e6]).*s;
+            y2 = f(x2);
+
+            % check average and variance
+            tc.verifyClose(mean(y1), mean(y2));
+            tc.verifyClose(var(y1), var(y2));
+            tc.verifyClose(unc(y1), std(y2));
+            tc.verifyInstanceOf(string(y1), "string");
+            
+            % confirm we set calcId on all calculations
+            tc.verifyTrue(y1.id == UncVal.calcId);
+        end
+
     end
     
 end
