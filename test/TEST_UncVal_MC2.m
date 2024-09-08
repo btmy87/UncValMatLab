@@ -24,27 +24,45 @@ classdef TEST_UncVal_MC2 < matlab.unittest.TestCase
         % 5. ymax
         y = num2cell(linspace(0, 1, 11));
         fun2 = {...
-            {@(x,y) x+y        , -10, 10, -10, 10}, ...
-            {@(x,y) x-y        , -10, 10, -10, 10}, ...
-            {@(x,y) x.*y       , 0.1, 10, 0.1, 10}, ... % expect zero might be trouble
-            {@(x,y) x./y       , -10, 10, 0.1, 10}, ...
-            {@(x,y) x.^y       , 0.1, 5, 0.1, 5 }, ...
+            {@(x,y) x+y         , -10,  10, -10, 10}, ...
+            {@(x,y) x-y         , -10,  10, -10, 10}, ...
+            {@(x,y) x.*y        , 0.1,  10, 0.1, 10}, ... % expect zero might be trouble
+            {@(x,y) x./y        , -10,  10, 0.1, 10}, ...
+            {@(x,y) x.^y        , 0.1,  5 , 0.1, 5 }, ...
+            {@(x,y) atan2(y, x) , 0.1,  5 ,  -4, 5 }, ... % y = 0 would be trouble
+            {@(x,y) atan2(y, x) , -5 ,-0.1,  -4, 5 }, ...
+            {@(x,y) atan2d(y, x), 0.1,  5 ,  -4, 5 }, ... % y = 0 would be trouble
+            {@(x,y) atan2d(y, x), -5 ,-0.1,  -4, 5 }, ...
           };
     end
 
     
     methods(TestClassSetup)
         % Shared setup for the entire test class
+        function setup_path(~)
+            if exist("UncVal", "class") < 1
+                % need to add path to parent folder
+                dir = string(fileparts(mfilename("fullpath")));
+                addpath(fullfile(dir, ".."));
+            end
+        end
+
     end
     
     methods(TestMethodSetup)
         % Setup for each test
     end
 
-    methods(Static)
-        function out = isClose(a, b)
-            tol = 0.5*(abs(a)+abs(b)).*TEST_UncVal_MC2.REL_TOL + TEST_UncVal_MC2.ABS_TOL;
-            out = all(abs(a-b) < tol); 
+    methods
+        function verifyClose(testCase, a, b)
+            tol = 0.5*(abs(a)+abs(b)).*testCase.REL_TOL + testCase.ABS_TOL;
+            msg = "verifyClose failed";
+            if isscalar(a) && isscalar(b)
+                msg = sprintf("|a-b| = %.14g, tol = %.14g\n" + ...
+                        "a=%.14g, b=%.14g", ...
+                        abs(a-b), tol, a, b);
+            end
+            verifyTrue(testCase, all(abs(a-b) < tol), msg); 
         end
     end
     
@@ -67,9 +85,9 @@ classdef TEST_UncVal_MC2 < matlab.unittest.TestCase
             z2 = f(x2, y2);
 
             % check average and variance
-            tc.verifyTrue(tc.isClose(z1.val, mean(z2)));
-            tc.verifyTrue(tc.isClose(var(z1), var(z2)));
-            tc.verifyTrue(tc.isClose(unc(z1), std(z2)));
+            tc.verifyClose(z1.val, mean(z2));
+            tc.verifyClose(var(z1), var(z2));
+            tc.verifyClose(unc(z1), std(z2));
             tc.verifyInstanceOf(string(z1), "string");
     
         end
