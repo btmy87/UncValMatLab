@@ -2,7 +2,11 @@
 % plot some UncVals
 % the regular 'plot' command just plots the values
 % the errorbar command automatically plots error bars at ±2*x.unc()
-
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
 %% Test 2
 x = UncVal(linspace(0, 1, 8), 0.02, "x");
 y = x.^2 + UncVal(0, 0.04, "y");

@@ -1,4 +1,9 @@
 % example for plotting 2D correlated variables
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
 
 %% Test Plot correlated variables
 x = UncVal(1, 0.2, "x");

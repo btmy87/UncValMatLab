@@ -1,5 +1,9 @@
 % test UncVal plots for PDF and CDF
-
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
 %% Test distribution plot
 x = UncVal(0, 1, "x"); % Standard normal disturbution
 [yp, xp] = pdf(x);

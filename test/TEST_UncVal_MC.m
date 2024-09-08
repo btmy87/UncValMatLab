@@ -90,6 +90,13 @@ classdef TEST_UncVal_MC < matlab.unittest.TestCase
     
     methods(TestClassSetup)
         % Shared setup for the entire test class
+        function setup_path(~)
+            if exist("UncVal", "class") < 1
+                % need to add path to parent folder
+                dir = string(fileparts(mfilename("fullpath")));
+                addpath(fullfile(dir, ".."));
+            end
+        end
     end
     
     methods(TestMethodSetup)

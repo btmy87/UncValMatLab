@@ -1,5 +1,9 @@
 % example for github readme
-
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
 %% TEST normal usage
 x = UncVal(1.0, 0.1./2.0, "x"); % create values with standard uncertaities
 y = UncVal(2.0, 0.2./2.0, "y"); % give values unique id's

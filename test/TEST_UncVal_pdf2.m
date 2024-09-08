@@ -6,7 +6,16 @@ classdef TEST_UncVal_pdf2 < matlab.unittest.TestCase
         ABS_TOL = 1e-4;
         REL_TOL = 1e-4;
     end
-
+    methods(TestClassSetup)
+        % Shared setup for the entire test class
+        function setup_path(~)
+            if exist("UncVal", "class") < 1
+                % need to add path to parent folder
+                dir = string(fileparts(mfilename("fullpath")));
+                addpath(fullfile(dir, ".."));
+            end
+        end
+    end
     methods
         function verifyClose(testCase, a, b)
             tol = 0.5*(abs(a)+abs(b)).*TEST_UncVal_MC.REL_TOL + TEST_UncVal_MC.ABS_TOL;

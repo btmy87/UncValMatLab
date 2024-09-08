@@ -4,6 +4,11 @@
 % we measure pressure and temperature upstream of the venturi, and the
 % throat pressure of the venturi
 % we neglect any Cd effects
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
 
 %% Test 1
 % take the upstream diameter as 0.5±0.01 (take all uncertainties as 95%)

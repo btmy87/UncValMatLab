@@ -8,6 +8,12 @@ absTol = 1e-2;
 isClose = @(x, y) abs(x-y) < (relTol.*abs(x) + absTol);
 assertClose = @(x, y) assert(all(isClose(x, y), 'all'));
 
+if exist("UncVal", "class") < 1
+    % need to add path to parent folder
+    dir = string(fileparts(mfilename("fullpath")));
+    addpath(fullfile(dir, ".."));
+end
+
 %% Test toMonteCarlo scalars
 rng("default");
 
